@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 from .models import Post
 
@@ -15,4 +15,6 @@ def postList(request: HttpRequest):
 
 
 def postDetail(request: HttpRequest, pk: int):
-    return HttpResponse("Developing ...")
+    post = get_object_or_404(Post.published, id=pk)
+    context = {"post": post}
+    return render(request=request, template_name="blog/detail.html", context=context)
