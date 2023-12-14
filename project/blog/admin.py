@@ -3,11 +3,11 @@ from .models import Post
 
 
 # Title
-admin.sites.AdminSite.site_title = "پنل" # Django site administration
+# admin.sites.AdminSite.site_title = "پنل" # Django site administration
 # Index title
-admin.sites.AdminSite.index_title = "پنل مدیریت" # Site administration
+# admin.sites.AdminSite.index_title = "پنل مدیریت" # Site administration
 # Header
-admin.sites.AdminSite.site_header = "پنل مدیریت جنگو" # Django administration
+# admin.sites.AdminSite.site_header = "پنل مدیریت جنگو" # Django administration
 
 
 # Register your models here.
