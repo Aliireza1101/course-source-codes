@@ -27,7 +27,7 @@ class Post(models.Model):
 
     publish_date = models.DateTimeField(default=timezone.now)
     create_date = models.DateTimeField(auto_now_add=True)
-    create_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(auto_now=True)
 
     # Managers :
     objects = models.Manager()
