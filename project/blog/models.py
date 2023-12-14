@@ -17,15 +17,15 @@ class Post(models.Model):
         rejected = "RJ", "Rejected"
         drafted = "DR", "Drafted"
 
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    slug = models.SlugField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name="عنوان")
+    description = models.TextField(verbose_name="توضیحات")
+    slug = models.SlugField(max_length=255, verbose_name="اسلاگ")
     author = models.ForeignKey(
-        to=User, on_delete=models.CASCADE, related_name="posts"
+        to=User, on_delete=models.CASCADE, related_name="posts", verbose_name="نویسنده"
     )
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.drafted)
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.drafted, verbose_name="وضعیت")
 
-    publish_date = models.DateTimeField(default=timezone.now)
+    publish_date = models.DateTimeField(default=timezone.now, verbose_name="تاریخ انتشار")
     create_date = models.DateTimeField(auto_now_add=True)
     create_date = models.DateTimeField(auto_now=True)
 
@@ -39,3 +39,5 @@ class Post(models.Model):
     class Meta:
         ordering = ("-publish_date",)
         indexes = [models.Index(fields=["-publish_date",])]
+        verbose_name = "پست"
+        verbose_name_plural = "پست ها"
