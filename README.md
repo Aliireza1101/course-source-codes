@@ -1,2 +1,2 @@
 # django-blog
-First project with Django in Sabzlearn's django course.
+**First project with Django in Sabzlearn's django course.**
