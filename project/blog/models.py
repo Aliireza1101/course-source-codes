@@ -62,6 +62,9 @@ class Ticket(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=11)
 
+    active = models.BooleanField(default=False)
+    create_date = models.DateTimeField(auto_now_add=True)
+
     def __str__(self) -> str:
         return self.title
     
