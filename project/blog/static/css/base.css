@@ -108,3 +108,95 @@ li::before {
 }
 
 /*-----------------------detail-----------------------*/
+/* General Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body,
+html {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f9;
+    color: #444;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Post Styling */
+.post {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px -3px #0003;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px -3px #0003;
+}
+
+/* Post Header */
+.post-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.post-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    color: #606060;
+    font-style: italic;
+}
+
+.post-author {
+    font-size: 1rem;
+    color: #888;
+}
+
+.author-name {
+    font-weight: bold;
+    color: #5b5b5b;
+}
+
+.post-date {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: #a0a0a0;
+}
+
+/* Post Content */
+.post-content p {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* Adding Responsive Behavior */
+@media screen and (max-width: 768px) {
+    .post {
+        margin: 20px 15px;
+        padding: 20px;
+    }
+
+    .post-title {
+        font-size: 2rem;
+    }
+
+    .post-content p {
+        font-size: 0.95rem;
+    }
+}
