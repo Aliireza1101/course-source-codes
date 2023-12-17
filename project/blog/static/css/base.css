@@ -200,3 +200,84 @@ html {
         font-size: 0.95rem;
     }
 }
+
+/*------------------Pagination----------------*/
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+.page-a {
+    text-decoration: none;
+    margin: 0 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    /* Circular shape */
+    color: #5f6368;
+    background-color: white;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+}
+
+.page-a:hover,
+.page-a:focus {
+    outline: none;
+    background-color: #f8f9fa;
+    border-color: #e0e0e0;
+    color: #1a73e8;
+}
+
+.page-a.square {
+    border-radius: 8px;
+    /* Less rounded corners for squares */
+}
+
+.square-red {
+    background-color: #ff5252;
+    /* A more vibrant red */
+    color: white;
+    border-color: #ff5252;
+    border-radius: 8px;
+    /* Consistent with .square */
+    transform: scale(1.1);
+    /* Slightly larger for the current page */
+    font-weight: bold;
+}
+
+.point {
+    font-size: 20px;
+    /* Larger '...' for visibility */
+    font-weight: bold;
+    user-select: none;
+}
+
+/* Removing pointer-events means we don't need to set different hover styles */
+.page-a.point {
+    pointer-events: none;
+}
+
+.page-a>.point {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
+    background: none;
+    box-shadow: none;
+    /* Removing box-shadow to distinguish arrows */
+}
+
+/* Extra styles for improved UI */
+.page-a:not(.point):not(.square-red):hover {
+    text-decoration: underline;
+    transform: translateY(-2px);
+    /* Small lift effect on hover */
+}
