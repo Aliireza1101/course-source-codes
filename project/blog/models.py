@@ -71,3 +71,24 @@ class Ticket(models.Model):
     # class Meta:
     #     verbose_name = "تیکت"
     #     verbose_name_plural = "تیکت ها"
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        to=Post, on_delete=models.CASCADE, related_name="comments"
+        )
+    author = models.ForeignKey(to=User,  on_delete=models.CASCADE, related_name="comments")
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    create_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        ordering = ("-create_date",)
+        indexes = [models.Index(fields=["-create_date",])]
+        # verbose_name = "کامنت"
+        # verbose_name_plural = "کامنت ها"
