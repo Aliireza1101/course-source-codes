@@ -47,3 +47,24 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"pk": self.id})
     
+
+class Ticket(models.Model):
+    class Subject(models.TextChoices):
+        proposal = "PP", "Proposal"
+        feedback = "FB", "Feedback"
+        report = "RP", "Report"
+
+    title = models.CharField(max_length=255)
+    message = models.TextField()
+
+    subject = models.CharField(max_length=2, choices=Subject.choices)
+    
+    email = models.EmailField()
+    phone_number = models.CharField(max_length=11)
+
+    def __str__(self) -> str:
+        return self.title
+    
+    class Meta:
+        verbose_name = "تیکت"
+        verbose_name_plural = "تیکت ها"
