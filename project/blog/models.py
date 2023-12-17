@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.urls import reverse
 
 
 # Create your managers here.
@@ -41,3 +42,8 @@ class Post(models.Model):
         indexes = [models.Index(fields=["-publish_date",])]
         # verbose_name = "پست"
         # verbose_name_plural = "پست ها"
+
+
+    def get_absolute_url(self):
+        return reverse("blog:post_detail", kwargs={"pk": self.id})
+    

@@ -6,7 +6,7 @@
     <ol>
         {% for post in posts %}
             <li>
-                <a href="/blog/posts/{{post.id}}">
+                <a href="{{post.get_absolute_url}}">
                     <h3>{{post}}</h3>
                 </a>
                 <p>{{post.description|truncatewords:5}}</p>
