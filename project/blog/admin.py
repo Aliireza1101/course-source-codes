@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post, Ticket
 
 
 # Title
@@ -25,3 +25,13 @@ class PostAdmin(admin.ModelAdmin):
 
     search_fields = ["title", "description", "author"]
     raw_id_fields = ["author"]
+
+
+@admin.register(Ticket)
+class TicketAdmin(admin.ModelAdmin):
+    list_display = ["title", "subject", "phone_number", "email"]
+    list_editable = ["subject"]
+    list_display_links = ["title", "phone_number", "email"]
+    list_filter = ["subject"]
+
+    search_fields = ["title", "message"]

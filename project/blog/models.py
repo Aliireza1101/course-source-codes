@@ -65,6 +65,6 @@ class Ticket(models.Model):
     def __str__(self) -> str:
         return self.title
     
-    class Meta:
-        verbose_name = "تیکت"
-        verbose_name_plural = "تیکت ها"
+    # class Meta:
+    #     verbose_name = "تیکت"
+    #     verbose_name_plural = "تیکت ها"
