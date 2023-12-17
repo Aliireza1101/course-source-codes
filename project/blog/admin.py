@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Ticket
+from .models import Post, Ticket, Comment
 
 
 # Title
@@ -23,7 +23,7 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["title"]}
     date_hierarchy = "create_date"
 
-    search_fields = ["title", "description", "author"]
+    search_fields = ["title", "description", "author__first_name", "author__last_name"]
     raw_id_fields = ["author"]
 
 
@@ -35,3 +35,18 @@ class TicketAdmin(admin.ModelAdmin):
     list_filter = ["subject"]
 
     search_fields = ["title", "message"]
+
+
+@admin.register(Comment)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ["title", "author", "create_date", "active"]
+    list_editable = ["active"]
+    list_display_links = ["title", "author", "create_date"]
+    list_filter = ["active", "create_date", "author"]
+
+    ordering = ["create_date"]
+
+    date_hierarchy = "create_date"
+
+    search_fields = ["title", "description", "author__first_name", "author__last_name"]
+    raw_id_fields = ["author", "post"]
