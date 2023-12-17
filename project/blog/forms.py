@@ -1,5 +1,6 @@
 from django import forms
 from django.db.models import TextChoices
+from .models import Comment
 
 
 class TicketForm(forms.Form):
@@ -23,3 +24,9 @@ class TicketForm(forms.Form):
                 raise forms.ValidationError("This field must be completely numeric!")
             else:
                 return phone_number
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ("title", "description")
