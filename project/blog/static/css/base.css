@@ -281,3 +281,108 @@ html {
     transform: translateY(-2px);
     /* Small lift effect on hover */
 }
+
+/*------------------Ticket----------------*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #eff3f6;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.ticket-title {
+    color: #2c3e50;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.ticket-form {
+    max-width: 600px;
+    margin: auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ticket-form p {
+    margin-top: 0;
+}
+
+.label-title,
+.label-message,
+.label-phone,
+.label-email,
+.label-subject {
+    display: block;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.input-title,
+.input-phone,
+.input-email,
+.textarea-message,
+.select-subject {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    resize: vertical;
+    background-color: #fdfdfd;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input-title:focus,
+.input-phone:focus,
+.input-email:focus,
+.textarea-message:focus,
+.select-subject:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.25);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.8em;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 30px;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+@media (max-width: 640px) {
+    .ticket-form {
+        padding: 20px;
+    }
+
+    .header-title {
+        font-size: 1.5em;
+    }
+}

@@ -1,7 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post
+from .models import Post, Ticket
+from .forms import TicketForm
 
 
 # Create your views here.
@@ -30,3 +31,26 @@ def postDetail(request: HttpRequest, pk: int):
     post = get_object_or_404(Post.published, id=pk)
     context = {"post": post}
     return render(request=request, template_name="blog/detail.html", context=context)
+
+
+def createTicket(request: HttpRequest):
+    if request.method == "POST":
+        form = TicketForm(request.POST)
+
+        if form.is_valid():
+            ticket = Ticket.objects.create()
+            data = form.cleaned_data
+            title = ticket.title = data["title"]
+            message = ticket.message = data["message"]
+            subject = ticket.subject = data["subject"]
+
+            email = ticket.email = data["email"]
+            phone = ticket.phone_number = data["phone_number"]
+            ticket.save()
+
+            return redirect("blog:index")
+    else:
+        form = TicketForm()
+
+    context = {"form": form}
+    return render(request=request, template_name="forms/ticket.html", context=context)
