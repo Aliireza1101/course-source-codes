@@ -7,5 +7,6 @@ urlpatterns = [
     path("", view=views.index, name="index"),
     path("posts/", view=views.postList, name="post_list"),
     path("posts/<pk>/", view=views.postDetail, name="post_detail"),
+    path("posts/<pk>/add-comment", view=views.addComment, name="add_comment"),
     path("ticket/", view=views.createTicket, name="ticket"),
 ]
