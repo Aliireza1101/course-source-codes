@@ -78,8 +78,7 @@ class Comment(models.Model):
         to=Post, on_delete=models.CASCADE, related_name="comments"
         )
     author = models.ForeignKey(to=User,  on_delete=models.CASCADE, related_name="comments")
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    text = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=False)
