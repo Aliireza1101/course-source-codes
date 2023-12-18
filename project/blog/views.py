@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, Ticket
-from .forms import TicketForm
+from .models import Post, Ticket, Comment
+from .forms import TicketForm, CommentForm
 
 
 # Create your views here.
@@ -29,7 +29,9 @@ def postList(request: HttpRequest):
 
 def postDetail(request: HttpRequest, pk: int):
     post = get_object_or_404(Post.published, id=pk)
-    context = {"post": post}
+    comments = post.comments.all().filter(is_active=True)
+    form = CommentForm()
+    context = {"post": post, "form":form, "comments": comments}
     return render(request=request, template_name="blog/detail.html", context=context)
 
 
@@ -54,3 +56,27 @@ def createTicket(request: HttpRequest):
 
     context = {"form": form}
     return render(request=request, template_name="forms/ticket.html", context=context)
+
+
+def addComment(request: HttpRequest, pk: int):
+    form = CommentForm(request.POST)
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post.published, id=pk)
+        comment = None
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author = request.user
+            comment.is_active = True
+            comment.save()
+
+            context = {"form": form, "comment": comment, "post": post}
+            return redirect("blog:post_detail", pk=pk)
+
+        comments = post.comments.all().filter(is_active=True)
+        context = {"post": post, "form": form, "comments":comments}
+        return render(
+            request=request, template_name="blog/detail.html", context=context
+        )
+    else:
+        return HttpResponse("<h1>Please register your account first!</h1>")

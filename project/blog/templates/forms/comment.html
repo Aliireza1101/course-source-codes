@@ -1,0 +1,12 @@
+<div class="comment-form">
+    <form method="post" enctype="multipart/form-data" action="{% url 'blog:add_comment' post.id %}">
+        {% csrf_token %}
+        <textarea name="text" class="comment-textarea" placeholder="Write your comment about this post">{% if form.text.value %}{{ form.text.value }}{% endif %}</textarea>
+        {% if form.text.errors %}
+            {% for error in form.text.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <input type="submit" value="Comment"></input>
+    </form>
+</div>
