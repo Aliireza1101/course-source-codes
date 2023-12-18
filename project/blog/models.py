@@ -11,6 +11,11 @@ class PostPublishManager(models.Manager):
         return super().get_queryset().filter(status=Post.Status.published)
 
 
+class CommentActiveManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset().filter(is_active=True)
+
+
 # Create your models here.
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -81,10 +86,14 @@ class Comment(models.Model):
     text = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+
+    # Managers :
+    objects = models.Manager()
+    actives = CommentActiveManager()
 
     def __str__(self) -> str:
-        return self.title
+        return " ".join(self.text.split()[:5]) + "..."
     
     class Meta:
         ordering = ("-create_date",)

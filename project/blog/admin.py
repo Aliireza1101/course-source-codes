@@ -39,10 +39,10 @@ class TicketAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["author", "create_date", "active"]
-    list_editable = ["active"]
+    list_display = ["author", "create_date", "is_active"]
+    list_editable = ["is_active"]
     list_display_links = ["author", "create_date"]
-    list_filter = ["active", "create_date", "author"]
+    list_filter = ["is_active", "create_date", "author"]
 
     ordering = ["create_date"]
 
