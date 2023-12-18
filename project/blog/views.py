@@ -7,7 +7,7 @@ from .forms import TicketForm, CommentForm
 
 # Create your views here.
 def index(request: HttpRequest):
-    return HttpResponse("Developing ...")
+    return render(request=request, template_name="blog/index.html")
 
 
 def postList(request: HttpRequest):

@@ -1,0 +1,22 @@
+{% extends "parent/base.html" %}
+{% load blog_tags %}
+{% block title %}Blog{% endblock title %}
+{% block content %}
+    <div>
+        <header>
+            <h1>Welcome to My Blog</h1>
+        </header>
+
+        <section>
+            <h2>Latest Posts</h2>
+            {% latest_posts 2 %}
+        </section>
+
+        <div>
+            <p>Total Posts: <span>{% total_posts %}</span></p>
+            <p>Total Comments: <span>{% total_comments %}</span></p>
+            <p>Date of Publishing the Last Post: <span>{% last_post_publish %}</span></p>
+        </div>
+
+    </div>
+{% endblock content %}
