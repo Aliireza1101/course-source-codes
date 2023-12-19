@@ -31,6 +31,8 @@ class Post(models.Model):
     )
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.drafted)
 
+    reading_time = models.PositiveIntegerField()
+
     publish_date = models.DateTimeField(default=timezone.now)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
