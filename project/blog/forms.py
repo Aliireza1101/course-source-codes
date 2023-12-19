@@ -1,6 +1,7 @@
 from django import forms
 from django.db.models import TextChoices
-from .models import Comment
+from .models import Comment, Post
+from better_profanity import profanity
 
 
 class TicketForm(forms.Form):
@@ -30,3 +31,22 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ("text",)
+
+
+class PostForm(forms.ModelForm):  # Form to create a post
+    class Meta:
+        fields = ["title", "description", "reading_time"]
+        model = Post
+
+    def clean_title(self):  # validation for title
+        title: str = self.cleaned_data["title"]
+        if profanity.contains_profanity(title):
+            raise forms.ValidationError("Your title can't contain profanity!")
+
+        words = title.split(" ")
+        for word in words:
+            # Longest word in english = 'pneumonoultramicroscopicsilicovolcanoconiosis' (45 letters) :))
+            if len(word) > 45:
+                raise forms.ValidationError(f"The word '{word}' is too long!")
+
+        return title
