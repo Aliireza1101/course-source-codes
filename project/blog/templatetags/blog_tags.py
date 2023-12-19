@@ -1,5 +1,7 @@
 from django import template
 from django.db.models import Count
+from markdown import markdown
+from django.utils.safestring import mark_safe
 from ..models import Post, Comment
 
 
@@ -34,3 +36,8 @@ def latest_posts(count=5):
     posts =  Post.published.all()[:count]
     context = {"posts":posts}
     return context
+
+
+@register.filter(name="markdown")
+def to_markdown(text):
+    return mark_safe(markdown(text))

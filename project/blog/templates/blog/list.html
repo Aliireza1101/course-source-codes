@@ -9,7 +9,7 @@
                 <a href="{{post.get_absolute_url}}">
                     <h3 class="post-title">{{post}}</h3>
                 </a>
-                <p class="descr">{{post.description|truncatewords:5}}</p>
+                <p class="descr">{{post.description|truncatewords:5|markdown}}</p>
                 <br>
             </li>
         {% endfor %}

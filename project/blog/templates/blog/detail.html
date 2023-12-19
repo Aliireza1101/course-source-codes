@@ -1,5 +1,5 @@
 {% extends "parent/base.html" %}
-
+{% load blog_tags %}
 {% block content %}
     <div class="centered-container">
     <a href="{% url 'blog:post_list' %}"><h1>Blog</h1></a>
@@ -14,7 +14,7 @@
         </header>
         
         <section class="post-content">
-            <p>{{ post.description | linebreaks }}</p>
+            <p>{{ post.description | markdown }}</p>
         </section>
     </article>
     

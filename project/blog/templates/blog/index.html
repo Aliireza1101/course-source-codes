@@ -21,7 +21,7 @@
                         <h3><span>{{post.author}}</span></h3>
                         <a href="{{post.get_absolute_url}}"><h3>
                             <span>{{post}}</span><br></h3>
-                            <span>{{post.description|truncatewords:5}}</span>
+                            <span>{{post.description|truncatewords:5|markdown}}</span>
                         </a>
                     </li>
                 {% endfor %}
