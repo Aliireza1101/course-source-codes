@@ -12,6 +12,22 @@
             {% latest_posts 2 %}
         </section>
 
+        <section>
+            <h2>Most Popular Posts</h2>
+            <ul>
+                {% most_popular_posts 2 as pop_posts %}
+                {% for post in pop_posts %}
+                    <li>
+                        <h3><span>{{post.author}}</span></h3>
+                        <a href="{{post.get_absolute_url}}"><h3>
+                            <span>{{post}}</span><br></h3>
+                            <span>{{post.description|truncatewords:5}}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
         <div>
             <p>Total Posts: <span>{% total_posts %}</span></p>
             <p>Total Comments: <span>{% total_comments %}</span></p>

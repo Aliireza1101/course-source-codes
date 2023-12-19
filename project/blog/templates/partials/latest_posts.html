@@ -3,8 +3,10 @@
         {% for post in posts %}
             <li>
                 <h3><span>{{post.author}}</span></h3>
-                <h3><span>{{post}}</span><br></h3>
-                <span>{{post.description|truncatewords:5}}</span>
+                <a href="{{post.get_absolute_url}}">
+                    <h3><span>{{post}}</span><br></h3>
+                    <span>{{post.description|truncatewords:5}}</span>
+                </a>
             </li>
         {% endfor %}
     </ul>
