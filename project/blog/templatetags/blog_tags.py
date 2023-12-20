@@ -1,7 +1,11 @@
 from django import template
 from django.db.models import Count, Max
-from markdown import markdown
 from django.utils.safestring import mark_safe
+from django.contrib.auth.models import User
+
+from markdown import markdown
+from better_profanity import profanity
+
 from ..models import Post, Comment
 
 
@@ -41,6 +45,11 @@ def shortest_post():
     return Post.published.order_by("reading_time").first()
 
 
+@register.simple_tag()
+def most_active_users(count:int=2):
+    return User.objects.annotate(post_count=Count("posts")).order_by("-post_count")[:count]
+
+
 @register.inclusion_tag("partials/latest_posts.html")
 def latest_posts(count=5):
     posts =  Post.published.all()[:count]
@@ -51,3 +60,8 @@ def latest_posts(count=5):
 @register.filter(name="markdown")
 def to_markdown(text):
     return mark_safe(markdown(text))
+
+
+@register.filter()
+def censor(text:str, censor_char:str="*"):
+    return profanity.censor(text, censor_char)
