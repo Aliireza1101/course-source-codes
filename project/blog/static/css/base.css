@@ -1,19 +1,21 @@
 /*-----------------------list-----------------------*/
 
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: linear-gradient(#ffffff 0%, #e6f8ff 100%);
+       height: 100%;
+    background-attachment: fixed;
+    padding: 20px;
+    line-height: 1.6;
+    /* Keep the gradient fixed during scroll */
+}
+
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 
 * {
     box-sizing: border-box;
 }
 
-body {
-    --h: 212deg;
-    --l: 43%;
-    --brandColor: hsl(var(--h), 71%, var(--l));
-    font-family: Montserrat, sans-serif;
-    margin: 0;
-    background-color: whitesmoke;
-}
 
 .descr {
     margin: 0;
@@ -124,15 +126,6 @@ a:hover {
     padding: 0;
 }
 
-body,
-html {
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f9;
-    color: #444;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-}
 
 /* Post Styling */
 .post {
@@ -301,7 +294,6 @@ html {
 
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #eff3f6;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -494,4 +486,155 @@ body {
     color: #999;
     font-style: italic;
     margin-top: 20px;
+}
+
+/*------------------Create Post----------------*/
+
+/* Base container style */
+.post-form {
+    max-width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border: 2px solid #e1e1eff2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.post-form:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+/* Title style */
+.post-form h1 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 45px;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+}
+
+.post-form h1:after {
+    content: '';
+    height: 4px;
+    background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+    display: block;
+    margin: 8px auto;
+    transition: width 0.3s;
+    width: 0;
+}
+
+.post-form h1:hover:after {
+    width: 100%;
+}
+
+/* Label style */
+.post-form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #555;
+    transition: all 0.3s;
+}
+
+/* Input and textarea styles */
+.post-form input[type='text'],
+.post-form input[type='number'],
+.post-form textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    transition: border-color 0.25s;
+}
+
+/* Enhance focus state */
+.post-form input[type='text']:focus,
+.post-form input[type='number']:focus,
+.post-form textarea:focus {
+    border-color: #34ace0;
+    box-shadow: 0 0 8px rgba(52, 172, 224, 0.3);
+}
+
+/* Customizing the reading time input with subtle animation */
+.post-form input[type='number']#id_reading_time {
+    background-color: #f9f9f9;
+    padding-left: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s, padding 0.3s;
+}
+
+.post-form input[type='number']#id_reading_time:focus {
+    background-color: #e3f2fd;
+    padding-left: 30px;
+}
+
+/* Error message styling */
+.error-message {
+    color: #e63946;
+    margin-bottom: 25px;
+    transition: height 0.2s;
+    height: 20px;
+}
+
+.submit-button {
+    background-color: #555;
+    /* Dark grey - looks sharp and modern */
+    color: #fff;
+    /* White text */
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.4s ease;
+    /* Smooth transition for hover effect */
+    position: relative;
+    /* Needed for the pseudo-elements */
+    overflow: hidden;
+    /* Ensures pseudo-elements are clipped to the button boundaries */
+}
+
+.submit-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: #007bff;
+    /* A lighter shade for the hover state */
+    transition: left 0.4s ease;
+    z-index: 0;
+}
+
+.submit-button::before {
+    content: 'Submit';
+    position: relative;
+    z-index: 1;
+}
+
+.submit-button:hover::after {
+    left: 0;
+}
+
+.submit-button:hover {
+    background: #007bff;
+}
+
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        margin: 30px auto;
+    }
 }

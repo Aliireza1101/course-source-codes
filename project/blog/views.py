@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post, Ticket, Comment
-from .forms import TicketForm, CommentForm
-
+from .forms import TicketForm, CommentForm, PostForm
+from .utils import slugify
 
 # Create your views here.
 def index(request: HttpRequest):
@@ -80,3 +80,27 @@ def addComment(request: HttpRequest, pk: int):
         )
     else:
         return HttpResponse("<h1>Please register your account first!</h1>")
+
+
+def createPost(request:HttpRequest): # Create Post view
+    if request.method == "POST":
+        if not request.user.is_authenticated:
+            return HttpResponse("Please register you account first!")
+        form = PostForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_post = Post()
+            new_post.title = data["title"]
+            new_post.description = data["description"]
+            new_post.reading_time = data["reading_time"]
+            new_post.slug = slugify(data["title"])
+            new_post.status = Post.Status.published # Only for now
+            new_post.author = request.user
+            new_post.save()
+
+            return redirect("blog:post_detail", pk=new_post.id)
+    else :
+        form = PostForm()
+
+    context = {"form":form}
+    return render(request=request, template_name="forms/post.html", context=context)
