@@ -1,0 +1,54 @@
+{% extends "parent/base.html" %}
+{% block title %}Ticket | Blog{% endblock title %}
+{% block content %}
+
+    <h1 class="ticket-title">Create a ticket</h1>
+    <form method="post" enctype="multipart/form-data" class="ticket-form">
+        {% csrf_token %}
+        <p class="label-title">{{ form.title.label }} :</p>
+        <input type="text" class="input-title" {% if form.title.value %}value={{ form.title.value }} {% endif %} name="title">
+        {% if form.title.errors %}
+            {% for error in form.title.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p class="label-message">{{ form.message.label }} :</p>
+        <textarea class="textarea-message" name="message" cols="30" rows="10">{% if form.message.value %}{{ form.message.value }}{% endif %}</textarea>
+        {% if form.message.errors %}
+            {% for error in form.message.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p class="label-phone">{{ form.phone_number.label }} :</p>
+        <input type="text" class="input-phone" {% if form.phone_number.value %}value={{ form.phone_number.value }} {% endif %} name='phone_number'>
+        {% if form.phone_number.errors %}
+            {% for error in form.phone_number.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p class="label-email">{{ form.email.label }} :</p>
+        <input type="email" class="input-email" {% if form.email.value %}value={{ form.email.value }} {% endif %} name='email'>
+        {% if form.email.errors %}
+            {% for error in form.email.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p class="label-subject">{{ form.subject.label }} :</p>
+        <select class="select-subject" name="subject">
+            <option value="RP">Report</option>
+            <option value="FB">Feedback</option>
+            <option value="PP" selected>Proposal</option>
+        </select>
+        {% if form.subject.errors %}
+            {% for error in form.subject.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <input type="submit" class="submit-button" value='Submit'>
+    </form>
+{% endblock content %}

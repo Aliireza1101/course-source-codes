@@ -1,0 +1,14 @@
+{% load blog_tags %}
+<div>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h3><span>{{post.author}}</span></h3>
+                <a href="{{post.get_absolute_url}}">
+                    <h3><span>{{post}}</span><br></h3>
+                    <span>{{post.description|truncatewords:5|markdown}}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

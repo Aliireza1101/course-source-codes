@@ -1,0 +1,79 @@
+{% extends "parent/base.html" %}
+{% load blog_tags %}
+{% block title %}Blog{% endblock title %}
+{% block content %}
+    <div>
+        <header>
+            <h1>Welcome to My Blog</h1>
+        </header>
+
+        <section>
+            <h2>Latest Posts</h2>
+            {% latest_posts 2 %}
+        </section>
+
+        <section>
+            <h2>Most Popular Posts</h2>
+            <ul>
+                {% most_popular_posts 2 as pop_posts %}
+                {% for post in pop_posts %}
+                    <li>
+                        <h3><span>{{ post.author }}</span></h3>
+                        <a href="{{ post.get_absolute_url }}"><h3>
+                            <span>{{ post }}</span><br></h3>
+                            <span>{{ post.description | truncatewords:5 | censor | markdown }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h2>Langest post : </h2>
+            <ul>
+                {% longest_post as longest_post %}
+                    <li>
+                        <h3><span>{{ longest_post.author }}</span></h3>
+                        <a href="{{ longest_post.get_absolute_url }}"><h3>
+                            <span>{{ longest_post }}</span><br></h3>
+                            <span>{{ longest_post.description | truncatewords:5 | censor | markdown }}</span>
+                        </a>
+                    </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Shortest post : </h2>
+            <ul>
+                {% shortest_post as shortest_post %}
+                    <li>
+                        <h3><span>{{ shortest_post.author }}</span></h3>
+                        <a href="{{ shortest_post.get_absolute_url }}"><h3>
+                            <span>{{ shortest_post }}</span><br></h3>
+                            <span>{{ shortest_post.description | truncatewords:5 | censor | markdown }}</span>
+                        </a>
+                    </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Most active users : </h2>
+            <ul>
+                {% most_active_users as active_users %}
+                {% for user in active_users %}
+                    <li>
+                        <h3>{{ user.username }}</h3>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+
+
+        <div>
+            <p>Total Posts: <span>{% total_posts %}</span></p>
+            <p>Total Comments: <span>{% total_comments %}</span></p>
+            <p>Date of Publishing the Last Post: <span>{% last_post_publish %}</span></p>
+        </div>
+
+    </div>
+{% endblock content %}
