@@ -1,10 +1,12 @@
 from django import forms
 from django.db.models import TextChoices
-from .models import Comment, Post
 from better_profanity import profanity
 
+from .models import Comment, Post
 
-class TicketForm(forms.Form):
+
+# Create your forms here.
+class TicketForm(forms.Form): # Form to create a ticket
     class Subject(TextChoices):
         proposal = "PP", "Proposal"
         feedback = "FB", "Feedback"
@@ -27,7 +29,7 @@ class TicketForm(forms.Form):
                 return phone_number
 
 
-class CommentForm(forms.ModelForm):
+class CommentForm(forms.ModelForm): # Form to create a comment
     class Meta:
         model = Comment
         fields = ("text",)

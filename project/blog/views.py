@@ -1,16 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from .models import Post, Ticket, Comment
 from .forms import TicketForm, CommentForm, PostForm
 from .utils import slugify
 
+
 # Create your views here.
-def index(request: HttpRequest):
+def index(request: HttpRequest): # Render template for url /blog/
     return render(request=request, template_name="blog/index.html")
 
 
-def postList(request: HttpRequest):
+def postList(request: HttpRequest): # Show list of posts
     posts = Post.published.all()
 
     paginator = Paginator(posts, 3)
@@ -27,7 +29,7 @@ def postList(request: HttpRequest):
     return render(request=request, template_name="blog/list.html", context=context)
 
 
-def postDetail(request: HttpRequest, pk: int):
+def postDetail(request: HttpRequest, pk: int): # Show detail of a post
     post = get_object_or_404(Post.published, id=pk)
     comments = post.comments.all().filter(is_active=True)
     form = CommentForm()
@@ -35,7 +37,7 @@ def postDetail(request: HttpRequest, pk: int):
     return render(request=request, template_name="blog/detail.html", context=context)
 
 
-def createTicket(request: HttpRequest):
+def createTicket(request: HttpRequest): # Create a ticket in template
     if request.method == "POST":
         form = TicketForm(request.POST)
 
@@ -58,7 +60,7 @@ def createTicket(request: HttpRequest):
     return render(request=request, template_name="forms/ticket.html", context=context)
 
 
-def addComment(request: HttpRequest, pk: int):
+def addComment(request: HttpRequest, pk: int): # Create a comment for specific post in database
     form = CommentForm(request.POST)
     if request.user.is_authenticated:
         post = get_object_or_404(Post.published, id=pk)
