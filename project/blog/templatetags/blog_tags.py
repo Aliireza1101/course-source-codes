@@ -1,5 +1,5 @@
 from django import template
-from django.db.models import Count
+from django.db.models import Count, Max
 from markdown import markdown
 from django.utils.safestring import mark_safe
 from ..models import Post, Comment
@@ -29,6 +29,16 @@ def most_popular_posts(count=5):
     return Post.published.annotate(comments_count=Count("comments")).order_by(
         "-comments_count"
     )[:count]
+
+
+@register.simple_tag()
+def longest_post():
+    return Post.published.order_by("reading_time").last()
+
+
+@register.simple_tag()
+def shortest_post():
+    return Post.published.order_by("reading_time").first()
 
 
 @register.inclusion_tag("partials/latest_posts.html")
