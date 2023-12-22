@@ -10,5 +10,5 @@ urlpatterns = [
     path("create/", view=views.createPost, name="create_post"),
     path("posts/<pk>/add-comment", view=views.addComment, name="add_comment"),
     path("ticket/", view=views.createTicket, name="ticket"),
-    path("search/", view=..., name="post_search"),
+    path("search/", view=views.postSearch, name="post_search"),
 ]

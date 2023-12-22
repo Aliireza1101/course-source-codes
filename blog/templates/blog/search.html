@@ -1,0 +1,21 @@
+{% extends "parent/base.html" %}
+{% load blog_tags %}
+{% block title %}Search | Blog{% endblock title %}
+{% block content %}
+    {% with result.count as post_count %}
+    <h3 class="post-count">{{ post_count }} related post{{ post_count|pluralize }} found</h3>
+    <ol style="--length: {{posts|length}}" role="list">
+        {% for post in result %}
+            <li style="--i: {{ forloop.counter }}">            
+                <a href="{{ post.get_absolute_url }}">
+                    <h3 class="post-title">{{ post }}</h3>
+                </a>
+                <p class="descr">{{ post.description|truncatewords:10|censor}}</p>
+                <br>
+            </li>
+        {% empty %}
+        <p class="no-posts">No related post found</p>
+        {% endfor %}
+    </ol>
+    {% endwith %}
+{% endblock content %}

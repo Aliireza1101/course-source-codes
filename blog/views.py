@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.decorators.http import require_GET
 
 from .models import Post, Ticket, Comment
-from .forms import TicketForm, CommentForm, PostForm
+from .forms import TicketForm, CommentForm, PostForm, SearchForm
 from .utils import slugify
 
 
@@ -106,3 +107,24 @@ def createPost(request:HttpRequest): # Create Post view
 
     context = {"form":form}
     return render(request=request, template_name="forms/post.html", context=context)
+
+
+@require_GET
+def postSearch(request: HttpRequest):
+    query = None
+    result = []
+    if request.GET.get("query"):
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data["query"]
+            result = Post.published.filter(
+                # Field lookups : https://docs.djangoproject.com/en/4.2/ref/models/querysets/#field-lookups
+                description__icontains=query
+                # Operations that return new query sets : https://docs.djangoproject.com/en/4.2/ref/models/querysets/#operators-that-return-new-querysets
+            ) | Post.published.filter(title__icontains=query)
+
+    context = {
+        'query': query,
+        'result': result,
+    }
+    return render(request=request, template_name="blog/search.html", context=context)

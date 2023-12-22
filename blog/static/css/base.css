@@ -638,3 +638,130 @@ body {
         margin: 30px auto;
     }
 }
+
+/*------------------Search bar----------------*/
+
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    /* Optimal width for focus */
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.2);
+    /* More pronounced shadow */
+    border-radius: 5px;
+    /* Less rounded for a sharper look */
+    display: flex;
+    overflow: hidden;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 20px;
+    border: none;
+    border-right: 1px solid #ddd;
+    /* Subtle border for visual separation */
+    font-size: 16px;
+    /* Standard readable font size */
+    transition: all 0.2s ease-in-out;
+    /* Smooth transition for focus */
+}
+
+.search-input:focus {
+    outline: none;
+    border-right-color: #007bff;
+    /* Match button color */
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    background-color: #e9f5ff;
+    /* Light blue background when focused */
+}
+
+.search-input::placeholder {
+    font-style: italic;
+    /* A touch of style for the placeholder */
+    font-weight: 300;
+    /* Lighter for a more refined look */
+}
+
+.search-button {
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 0 25px;
+    font-size: 18px;
+    transition: all 0.2s ease-in-out;
+    /* Smooth transition for the button too */
+}
+
+.search-button:hover,
+.search-button:focus {
+    background-color: #0056b3;
+    outline: none;
+    transform: scale(1.1);
+    /* More pronounced scaling */
+}
+
+.search-error-messages {
+    color: #b77277;
+    /* Less aggressive error color */
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
+
+/* Adding an animation to the search button to gently catch attention */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.search-button {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* Adding a fade-in effect to the search bar */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.search-bar-container {
+    animation: fadeIn 1s ease-out;
+}
+
+h3.post-count {
+    font-size: 1.5em;
+    color: #2c3e50;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+p.no-posts {
+    color: #95a5a6;
+    font-size: 1em;
+    font-style: italic;
+    text-align: center;
+    padding: 2em 0;
+}
