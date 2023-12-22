@@ -52,3 +52,7 @@ class PostForm(forms.ModelForm):  # Form to create a post
                 raise forms.ValidationError(f"The word '{word}' is too long!")
 
         return title
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=255, required=True)
