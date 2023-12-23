@@ -1,6 +1,5 @@
 <div class="search-bar-container">
     <form method="get" action="{% url 'blog:post_search' %}" class="search-form">
-        {% csrf_token %}
         <input type="text" name="query" class="search-input" placeholder="What are you looking for?"
             {% if form.query.value %}value="{{ form.query.value }}" {% endif %}
             required>
