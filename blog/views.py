@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
 from django.db.models import Q
+from django.contrib.postgres.search import SearchVector
 
 from .models import Post, Ticket, Comment
 from .forms import TicketForm, CommentForm, PostForm, SearchForm
@@ -118,11 +119,10 @@ def postSearch(request: HttpRequest):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data["query"]
-            # Field lookups : https://docs.djangoproject.com/en/4.2/ref/models/querysets/#field-lookups
-            result = Post.published.filter(
-                # https://docs.djangoproject.com/en/4.2/topics/db/queries/#complex-lookups-with-q
-                Q(description__icontains=query) | Q(title__icontains=query)
-            )
+            # https://docs.djangoproject.com/en/4.2/ref/contrib/postgres/search/#full-text-search
+            result = Post.published.annotate(
+                search=SearchVector('title', 'description',)
+            ).filter(search=query)
 
     context = {
         'query': query,
