@@ -2,8 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
-from django.db.models import Q
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.postgres.search import TrigramSimilarity
 
 from .models import Post, Ticket, Comment
 from .forms import TicketForm, CommentForm, PostForm, SearchForm
@@ -119,13 +118,11 @@ def postSearch(request: HttpRequest):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data["query"]
-            search_query = SearchQuery(query)
-            search_vector = SearchVector("title", "description", weight="A")
 
-            result = Post.published.annotate(
-                    search=search_vector, rank=SearchRank(search_vector, search_query)
-                ).filter(rank__gte=0.5).order_by("-rank")
-            
+            title_result = Post.published.annotate(similarity=TrigramSimilarity("title", query)).filter(similarity__gt=0.05)
+            description_result = Post.published.annotate(similarity=TrigramSimilarity("description", query)).filter(similarity__gt=0.05)
+            result = (title_result | description_result).order_by("-similarity")
+
     context = {
         'query': query,
         'result': result,
