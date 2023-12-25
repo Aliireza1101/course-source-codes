@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Ticket, Comment
+from .models import Post, Ticket, Comment, Image
 
 
 # Title
@@ -50,3 +50,17 @@ class PostAdmin(admin.ModelAdmin):
 
     search_fields = ["text", "author__first_name", "author__last_name"]
     raw_id_fields = ["author", "post"]
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    list_display = ["post", "title", "create_date"]
+    list_display_links = list_display
+    list_filter = ["create_date"]
+
+    ordering = ["create_date"]
+
+    date_hierarchy = "create_date"
+
+    search_fields = ["title", "description", "post__title"]
+    raw_id_fields = ["post"]
