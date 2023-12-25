@@ -14,6 +14,9 @@
         </header>
         
         <section class="post-content">
+            {% for image in post.images.all %}
+                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
+            {% endfor %}
             <p>{{ post.description | censor:'*' | markdown }}</p>
         </section>
     </article>

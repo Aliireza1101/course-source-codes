@@ -11,6 +11,7 @@
                     <h3 class="post-title">{{post}}</h3>
                 </a>
                 <p class="descr">{{post.description|truncatewords:10|censor}}</p>
+                <img src='{{ post.images.first.image_file.url }}' alt='{{ post.images.first.image_file.title }}'></img>
                 <br>
             </li>
         {% endfor %}
