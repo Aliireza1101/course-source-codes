@@ -102,3 +102,21 @@ class Comment(models.Model):
         indexes = [models.Index(fields=["-create_date",])]
         # verbose_name = "کامنت"
         # verbose_name_plural = "کامنت ها"
+
+
+class Image(models.Model):
+    post = models.ForeignKey(to=Post,  on_delete=models.CASCADE, related_name="images")
+    image_file = models.ImageField(upload_to="post", )
+    title = models.CharField(max_length=255, null=True, blank=True)
+    description = models.TextField(null=True, blank=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self) -> str:
+        return self.title if self.title else "None"
+    
+    class Meta:
+        ordering = ("-create_date",)
+        indexes = [models.Index(fields=["-create_date",])]
+        # verbose_name = "تصویر"
+        # verbose_name_plural = "تصویر ها"
