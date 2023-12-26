@@ -10,6 +10,15 @@ from .models import Post, Ticket, Comment, Image
 # admin.sites.AdminSite.site_header = "پنل مدیریت جنگو" # Django administration
 
 
+class ImageInline(admin.StackedInline):
+    model = Image
+    extra = 0
+
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0
+
+
 # Register your models here.
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -26,6 +35,7 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ["title", "description", "author__first_name", "author__last_name"]
     raw_id_fields = ["author"]
 
+    inlines = (ImageInline, CommentInline,)
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
