@@ -38,7 +38,7 @@ class TicketAdmin(admin.ModelAdmin):
 
 
 @admin.register(Comment)
-class PostAdmin(admin.ModelAdmin):
+class CommentAdmin(admin.ModelAdmin):
     list_display = ["author", "create_date", "is_active"]
     list_editable = ["is_active"]
     list_display_links = ["author", "create_date"]
