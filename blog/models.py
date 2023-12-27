@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 from django_resized import ResizedImageField
+from django.core.files.storage import default_storage
 
 
 # Create your managers here.
@@ -45,6 +46,14 @@ class Post(models.Model):
     def __str__(self) -> str:
         return self.title
     
+
+    def delete(self, *args, **kwargs):
+        for image in self.images.all():
+            if image:
+                default_storage.delete(image.image_file.path)
+        super().delete(*args, **kwargs)
+
+
     class Meta:
         ordering = ("-publish_date",)
         indexes = [models.Index(fields=["-publish_date",])]
@@ -116,7 +125,13 @@ class Image(models.Model):
 
     def __str__(self) -> str:
         return self.title if self.title else "None"
-    
+
+
+    def delete(self, *args, **kwargs):
+        default_storage.delete(self.image_file.path)
+        super().delete(*args, **kwargs)
+
+
     class Meta:
         ordering = ("-create_date",)
         indexes = [models.Index(fields=["-create_date",])]
