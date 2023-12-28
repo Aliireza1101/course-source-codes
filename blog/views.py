@@ -3,18 +3,21 @@ from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
 from django.contrib.postgres.search import TrigramSimilarity
+from django.db.models import Model, Manager, QuerySet
 
-from .models import Post, Ticket, Comment
+import itertools
+
+from .models import Post, Ticket, Comment, Image
 from .forms import TicketForm, CommentForm, PostForm, SearchForm
 from .utils import slugify
 
 
 # Create your views here.
-def index(request: HttpRequest): # Render template for url /blog/
+def index(request: HttpRequest):  # Render template for url /blog/
     return render(request=request, template_name="blog/index.html")
 
 
-def postList(request: HttpRequest): # Show list of posts
+def postList(request: HttpRequest):  # Show list of posts
     posts = Post.published.all()
 
     paginator = Paginator(posts, 3)
@@ -31,15 +34,15 @@ def postList(request: HttpRequest): # Show list of posts
     return render(request=request, template_name="blog/list.html", context=context)
 
 
-def postDetail(request: HttpRequest, pk: int): # Show detail of a post
+def postDetail(request: HttpRequest, pk: int):  # Show detail of a post
     post = get_object_or_404(Post.published, id=pk)
     comments = post.comments.all().filter(is_active=True)
     form = CommentForm()
-    context = {"post": post, "form":form, "comments": comments}
+    context = {"post": post, "form": form, "comments": comments}
     return render(request=request, template_name="blog/detail.html", context=context)
 
 
-def createTicket(request: HttpRequest): # Create a ticket in template
+def createTicket(request: HttpRequest):  # Create a ticket in template
     if request.method == "POST":
         form = TicketForm(request.POST)
 
@@ -62,7 +65,9 @@ def createTicket(request: HttpRequest): # Create a ticket in template
     return render(request=request, template_name="forms/ticket.html", context=context)
 
 
-def addComment(request: HttpRequest, pk: int): # Create a comment for specific post in database
+def addComment(
+    request: HttpRequest, pk: int
+):  # Create a comment for specific post in database
     form = CommentForm(request.POST)
     if request.user.is_authenticated:
         post = get_object_or_404(Post.published, id=pk)
@@ -78,7 +83,7 @@ def addComment(request: HttpRequest, pk: int): # Create a comment for specific p
             return redirect("blog:post_detail", pk=pk)
 
         comments = post.comments.all().filter(is_active=True)
-        context = {"post": post, "form": form, "comments":comments}
+        context = {"post": post, "form": form, "comments": comments}
         return render(
             request=request, template_name="blog/detail.html", context=context
         )
@@ -86,7 +91,7 @@ def addComment(request: HttpRequest, pk: int): # Create a comment for specific p
         return HttpResponse("<h1>Please register your account first!</h1>")
 
 
-def createPost(request:HttpRequest): # Create Post view
+def createPost(request: HttpRequest):  # Create Post view
     if request.method == "POST":
         if not request.user.is_authenticated:
             return HttpResponse("Please register you account first!")
@@ -98,15 +103,15 @@ def createPost(request:HttpRequest): # Create Post view
             new_post.description = data["description"]
             new_post.reading_time = data["reading_time"]
             new_post.slug = slugify(data["title"])
-            new_post.status = Post.Status.published # Only for now
+            new_post.status = Post.Status.published  # Only for now
             new_post.author = request.user
             new_post.save()
 
             return redirect("blog:post_detail", pk=new_post.id)
-    else :
+    else:
         form = PostForm()
 
-    context = {"form":form}
+    context = {"form": form}
     return render(request=request, template_name="forms/post.html", context=context)
 
 
@@ -119,12 +124,34 @@ def postSearch(request: HttpRequest):
         if form.is_valid():
             query = form.cleaned_data["query"]
 
-            title_result = Post.published.annotate(similarity=TrigramSimilarity("title", query)).filter(similarity__gt=0.05)
-            description_result = Post.published.annotate(similarity=TrigramSimilarity("description", query)).filter(similarity__gt=0.05)
-            result = (title_result | description_result).order_by("-similarity")
+            def search(field: str, queryset: QuerySet, precision: float) -> QuerySet:
+                return queryset.annotate(
+                    similarity=TrigramSimilarity(field, query)
+                ).filter(similarity__gt=precision)
+
+            post_title_result = search("title", Post.published, 0.05)
+            post_description_result = search("description", Post.published, 0.05)
+
+            post_result = (post_title_result | post_description_result).order_by(
+                "-similarity"
+            )
+
+            image_title_result = search("title", Image.objects, 0.05)
+            image_description_result = search("description", Image.objects, 0.05)
+
+            image_result = (image_title_result | image_description_result).order_by(
+                "-similarity"
+            )
+            image_result = list(map(lambda img: img.post, image_result))
+
+            result_ = list(itertools.chain(image_result, post_result))
+            result = []
+            for item in result_:
+                if item not in result:
+                    result.append(item)
 
     context = {
-        'query': query,
-        'result': result,
+        "query": query,
+        "result": result,
     }
     return render(request=request, template_name="blog/search.html", context=context)
