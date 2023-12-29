@@ -4,12 +4,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Model, Manager, QuerySet
+from django.template.defaultfilters import slugify
 
 import itertools
 
 from .models import Post, Ticket, Comment, Image
 from .forms import TicketForm, CommentForm, PostForm, SearchForm
-from .utils import slugify
 
 
 # Create your views here.
