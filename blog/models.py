@@ -124,8 +124,10 @@ class Image(models.Model):
 
 
     def __str__(self) -> str:
-        return self.title if self.title else "None"
-
+        if not self.title:
+            name:str = self.image_file.name.split("/")[-1]
+            return name
+        return self.title
 
     def delete(self, *args, **kwargs):
         default_storage.delete(self.image_file.path)
