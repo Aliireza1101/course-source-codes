@@ -15,9 +15,22 @@
         
         <section class="post-content">
             {% for image in post.images.all %}
+                {% if forloop.counter == 1 %}
+                
                 <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
+
+                <p>{{ post.description | censor:'*' | markdown }}</p>
+                
+                {% elif forloop.counter == 2 %}
+                
+                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
+                
+                {% else %}
+                
+                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img
+                
+                {% endif %}
             {% endfor %}
-            <p>{{ post.description | censor:'*' | markdown }}</p>
         </section>
     </article>
     
