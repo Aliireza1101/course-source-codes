@@ -765,3 +765,87 @@ p.no-posts {
     text-align: center;
     padding: 2em 0;
 }
+
+/*------------------Profile ----------------*/
+
+body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: #fff;
+}
+
+.user-dashboard {
+    width: 100%;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+.ud-user-info-container,
+.ud-user-menus-container {
+    width: 80%;
+    margin: auto;
+    background: #f2f7ff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.15);
+}
+
+.ud-username,
+.ud-user-posts-title,
+.ud-user-tickets-title {
+    color: #0052cc;
+}
+
+.ud-create-post-button,
+.ud-delete-post-button,
+.ud-edit-post-button,
+.ud-user-create-post-link,
+.ud-user-create-ticket-link {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background: #008cff;
+    color: #fff;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: background .3s ease;
+}
+
+.ud-create-post-button:hover,
+.ud-delete-post-button:hover,
+.ud-edit-post-button:hover,
+.ud-user-create-post-link:hover,
+.ud-user-create-ticket-link:hover {
+    background: #0069cc;
+    cursor: pointer;
+}
+
+.ud-user-posts-table,
+.ud-user-tickets-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.ud-user-posts-table th,
+.ud-user-tickets-table th {
+    padding: 10px;
+    background: #008cff;
+    color: #fff;
+}
+
+.ud-user-posts-table td,
+.ud-user-tickets-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.ud-user-posts-table-link {
+    text-decoration: none;
+    color: #0052cc;
+}
+
+.ud-user-posts-table-link:hover {
+    text-decoration: underline;
+}
