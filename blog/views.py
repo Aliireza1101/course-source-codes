@@ -159,7 +159,7 @@ def postSearch(request: HttpRequest):
 
 def profile(request: HttpRequest):
     user = request.user
-    posts = user.posts.published.all()
+    posts = user.posts.all()
     context = {"user": user, "posts": posts}
 
     return render(request=request, template_name="blog/profile.html", context=context)
