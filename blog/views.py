@@ -45,10 +45,12 @@ def postDetail(request: HttpRequest, pk: int):  # Show detail of a post
 def createTicket(request: HttpRequest):  # Create a ticket in template
     if request.method == "POST":
         form = TicketForm(request.POST)
-
+        if not request.user.is_authenticated:
+            return HttpResponse("Please register you account first!")
         if form.is_valid():
-            ticket = Ticket.objects.create()
+            ticket = Ticket()
             data = form.cleaned_data
+            author = ticket.author = request.user
             title = ticket.title = data["title"]
             message = ticket.message = data["message"]
             subject = ticket.subject = data["subject"]
