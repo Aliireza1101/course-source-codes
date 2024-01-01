@@ -40,7 +40,7 @@ class PostAdmin(admin.ModelAdmin):
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
     list_display = ["author", "title", "subject", "active"]
-    list_editable = ["subject"]
+    list_editable = ["subject", "active"]
     list_display_links = ["title",]
     list_filter = ["subject"]
 
