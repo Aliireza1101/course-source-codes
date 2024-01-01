@@ -39,9 +39,9 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ["title", "subject", "phone_number", "email"]
+    list_display = ["author", "title", "subject", "active"]
     list_editable = ["subject"]
-    list_display_links = ["title", "phone_number", "email"]
+    list_display_links = ["title",]
     list_filter = ["subject"]
 
     search_fields = ["title", "message"]
