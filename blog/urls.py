@@ -11,4 +11,5 @@ urlpatterns = [
     path("posts/<pk>/add-comment", view=views.addComment, name="add_comment"),
     path("ticket/", view=views.createTicket, name="ticket"),
     path("search/", view=views.postSearch, name="post_search"),
+    path("profile/", view=views.profile, name="profile"),
 ]
