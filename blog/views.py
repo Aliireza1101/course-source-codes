@@ -161,8 +161,8 @@ def postSearch(request: HttpRequest):
 
 def profile(request: HttpRequest):
     user = request.user
-    posts = user.posts.all()
-    tickets = user.tickets.all()
+    posts = user.posts.order_by("-create_date")
+    tickets = user.tickets.order_by("-create_date")
     context = {"user": user, "posts": posts, "tickets": tickets}
 
     return render(request=request, template_name="blog/profile.html", context=context)
