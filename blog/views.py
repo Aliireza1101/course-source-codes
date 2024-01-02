@@ -166,4 +166,10 @@ def profile(request: HttpRequest):
 
 
 def PostDelete(request: HttpRequest, pk:int):
-    return HttpResponse("Response for delete post")
+    context = {}
+    post = get_object_or_404(Post, id=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect("blog:profile")
+
+    return render(request=request, template_name="forms/delete-post.html", )

@@ -27,7 +27,7 @@
                 <td class="ud-user-posts-table-data">{{post.create_date}}</td>
                 <td class="ud-user-posts-table-data">{{post.status}}</td>
                 <td class="ud-user-posts-table-data">
-                <button class="delete-post ud-delete-post-button">Delete</button>
+                <button class="delete-post ud-delete-post-button" onclick="location.href='{% url 'blog:post_delete' post.id %}'">Delete</button>
                 <button class="edit-post ud-edit-post-button">Edit</button>
                 </td>
             </tr>
