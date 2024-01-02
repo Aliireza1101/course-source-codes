@@ -36,6 +36,9 @@ class CommentForm(forms.ModelForm): # Form to create a comment
 
 
 class CreatePostForm(forms.ModelForm):  # Form to create a post
+    image1 = forms.ImageField(required=False, label="First image")
+    image2 = forms.ImageField(required=False, label="Second image")
+
     class Meta:
         fields = ["title", "description", "reading_time"]
         model = Post
