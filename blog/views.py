@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 import itertools
 
 from .models import Post, Ticket, Comment, Image
-from .forms import TicketForm, CommentForm, PostForm, SearchForm
+from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm
 
 
 # Create your views here.
@@ -97,7 +97,7 @@ def createPost(request: HttpRequest):  # Create Post view
     if request.method == "POST":
         if not request.user.is_authenticated:
             return HttpResponse("Please register you account first!")
-        form = PostForm(request.POST)
+        form = CreatePostForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
             new_post = Post()
@@ -111,7 +111,7 @@ def createPost(request: HttpRequest):  # Create Post view
 
             return redirect("blog:post_detail", pk=new_post.id)
     else:
-        form = PostForm()
+        form = CreatePostForm()
 
     context = {"form": form}
     return render(request=request, template_name="forms/post.html", context=context)

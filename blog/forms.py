@@ -35,7 +35,7 @@ class CommentForm(forms.ModelForm): # Form to create a comment
         fields = ("text",)
 
 
-class PostForm(forms.ModelForm):  # Form to create a post
+class CreatePostForm(forms.ModelForm):  # Form to create a post
     class Meta:
         fields = ["title", "description", "reading_time"]
         model = Post
