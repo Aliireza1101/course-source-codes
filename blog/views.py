@@ -163,3 +163,7 @@ def profile(request: HttpRequest):
     context = {"user": user, "posts": posts, "tickets": tickets}
 
     return render(request=request, template_name="blog/profile.html", context=context)
+
+
+def PostDelete(request: HttpRequest, pk:int):
+    return HttpResponse("Response for delete post")
