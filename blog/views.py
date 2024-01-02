@@ -96,18 +96,17 @@ def createPost(request: HttpRequest):  # Create Post view
     if request.method == "POST":
         if not request.user.is_authenticated:
             return HttpResponse("Please register you account first!")
-        form = CreatePostForm(request.POST)
+        form = CreatePostForm(request.POST, request.FILES)
         if form.is_valid():
             data = form.cleaned_data
-            new_post = Post()
-            new_post.title = data["title"]
-            new_post.description = data["description"]
-            new_post.reading_time = data["reading_time"]
-            new_post.status = Post.Status.published  # Only for now
+            new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
 
-            return redirect("blog:post_detail", pk=new_post.id)
+            Image(image_file=data["image1"], post=new_post).save()
+            Image(image_file=data["image2"], post=new_post).save()
+
+            return redirect("blog:post_list")
     else:
         form = CreatePostForm()
 

@@ -28,7 +28,23 @@
                 <p class="error-message">{{ error }}</p>
             {% endfor %}
         {% endif %}
-        
+
+        <p>{{ form.image1.label }} :</p>
+        <input id="image1" type="file" {% if form.image1.value %}value={{ form.image1.value }} {% endif %} name="image1">
+        {% if form.image1.errors %}
+            {% for error in form.image1.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ form.image2.label }} :</p>
+        <input id="image2" type="file" {% if form.image2.value %}value={{ form.image2.value }} {% endif %} name="image2">
+        {% if form.image2.errors %}
+            {% for error in form.image2.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
         <input type="submit" value='Submit' class="submit-button">
     </form>
 {% endblock content %}
