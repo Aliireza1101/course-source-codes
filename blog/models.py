@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.urls import reverse
 from django_resized import ResizedImageField
 from django.core.files.storage import default_storage
+from django.template.defaultfilters import slugify
 
 
 # Create your managers here.
@@ -64,6 +65,11 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("blog:post_detail", kwargs={"pk": self.id})
     
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(args, kwargs)
+
 
 class Ticket(models.Model):
     class Subject(models.TextChoices):

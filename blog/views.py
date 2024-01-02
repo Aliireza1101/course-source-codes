@@ -4,7 +4,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Model, Manager, QuerySet
-from django.template.defaultfilters import slugify
 
 import itertools
 
@@ -104,7 +103,6 @@ def createPost(request: HttpRequest):  # Create Post view
             new_post.title = data["title"]
             new_post.description = data["description"]
             new_post.reading_time = data["reading_time"]
-            new_post.slug = slugify(data["title"])
             new_post.status = Post.Status.published  # Only for now
             new_post.author = request.user
             new_post.save()
