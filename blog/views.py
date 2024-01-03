@@ -165,7 +165,7 @@ def profile(request: HttpRequest):
     return render(request=request, template_name="blog/profile.html", context=context)
 
 
-def PostDelete(request: HttpRequest, pk:int):
+def postDelete(request: HttpRequest, pk:int):
     context = {}
     post = get_object_or_404(Post, id=pk)
     if request.method == "POST":
