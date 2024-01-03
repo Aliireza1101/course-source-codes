@@ -178,3 +178,8 @@ def postDelete(request: HttpRequest, pk: int):
         request=request,
         template_name="forms/delete-post.html",
     )
+
+
+@login_required(login_url="admin:index")
+def postEdit(request: HttpRequest, pk: int):
+    return HttpResponse("Response for post edit")
