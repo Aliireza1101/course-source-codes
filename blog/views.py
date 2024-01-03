@@ -182,4 +182,27 @@ def postDelete(request: HttpRequest, pk: int):
 
 @login_required(login_url="admin:index")
 def postEdit(request: HttpRequest, pk: int):
-    return HttpResponse("Response for post edit")
+    post = get_object_or_404(Post, id=pk)
+
+    if request.method == "POST":
+        form = CreatePostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+
+            for img in [data["image1"], data["image2"]]:
+                if img:
+                    Image(image_file=img, post=new_post).save()
+
+
+            return redirect("blog:profile")
+    else:
+        form = CreatePostForm(instance=post)
+
+    context = {"post": post, "form": form}
+
+    return render(
+        request=request, template_name="forms/edit-post.html", context=context
+    )

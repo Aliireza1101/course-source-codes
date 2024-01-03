@@ -1,0 +1,51 @@
+{% extends "parent/base.html" %}
+{% block title %}Create | Blog{% endblock title %}
+{% block content %}
+
+    <h1>Edit a Post</h1>
+    <form method="post" enctype="multipart/form-data" class="post-form">
+        {% csrf_token %}
+        <p>{{ form.title.label }} :</p>
+        <input id="id_title" type="text" {% if form.title.value %}value={{ form.title.value }} {% endif %} name="title">
+        {% if form.title.errors %}
+            {% for error in form.title.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ form.description.label }} :</p>
+        <textarea id="id_description" name="description" cols="30" rows="10">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
+        {% if form.description.errors %}
+            {% for error in form.description.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ form.reading_time.label }} :</p>
+        <input id="id_reading_time" type="number" {% if form.reading_time.value %}value={{ form.reading_time.value }} {% endif %} name="reading_time">
+        {% if form.reading_time.errors %}
+            {% for error in form.reading_time.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ form.image1.label }} :</p>
+        <input id="image1" type="file" {% if form.image1.value %}value={{ form.image1.value }} {% endif %} name="image1">
+        {% if form.image1.errors %}
+            {% for error in form.image1.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <p>{{ form.image2.label }} :</p>
+        <input id="image2" type="file" {% if form.image2.value %}value={{ form.image2.value }} {% endif %} name="image2">
+        {% if form.image2.errors %}
+            {% for error in form.image2.errors %}
+                <p class="error-message">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        
+        <input type="submit" value='Edit' class="submit-button">
+        <button onclick="location.href='{% url 'blog:profile' %}'">Back</button>
+    </form>
+{% endblock content %}
