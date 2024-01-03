@@ -36,7 +36,7 @@
         </table>
         {% else %}
         <p>No posts found!</p>
-        <p class="ud-user-create-post"><a href={% url 'blog:create_post' class="ud-user-create-post-link" %}>CREATE A POST</a></p>
+        <p class="ud-user-create-post"><a href={% url 'blog:create_post'  %} class="ud-user-create-post-link">CREATE A POST</a></p>
         {% endif %}
         </div>
         <div class="user-tickets ud-user-tickets-container">
