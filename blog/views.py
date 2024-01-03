@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
+from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 from django.db.models import Model, Manager, QuerySet
 
@@ -156,6 +157,7 @@ def postSearch(request: HttpRequest):
     return render(request=request, template_name="blog/search.html", context=context)
 
 
+@login_required(login_url="admin:index")
 def profile(request: HttpRequest):
     user = request.user
     posts = user.posts.order_by("-create_date")
@@ -165,11 +167,14 @@ def profile(request: HttpRequest):
     return render(request=request, template_name="blog/profile.html", context=context)
 
 
-def postDelete(request: HttpRequest, pk:int):
-    context = {}
+@login_required(login_url="admin:index")
+def postDelete(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
     if request.method == "POST":
         post.delete()
         return redirect("blog:profile")
 
-    return render(request=request, template_name="forms/delete-post.html", )
+    return render(
+        request=request,
+        template_name="forms/delete-post.html",
+    )
