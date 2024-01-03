@@ -5,7 +5,7 @@
     <div class="user-dashboard ud-container">
     <div class="user-info ud-user-info-container">
         <h1 class="ud-username">Welcome, {{user.username}} !</h1>
-        <button class="create-post ud-create-post-button">Create Post</button>
+        <button class="create-post ud-create-post-button" onclick="location.href='{% url 'blog:create_post' %}'">Create Post</button>
     </div>
     <div class="user-menus ud-user-menus-container">
         <div class="user-posts ud-user-posts-container">
