@@ -171,6 +171,11 @@ def profile(request: HttpRequest):
 @login_required(login_url="admin:index")
 def postDelete(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
+
+    user = post.author
+    if not user == request.user:
+        return HttpResponse("You dont have access to this post!")
+
     if request.method == "POST":
         post.delete()
         return redirect("blog:profile")
@@ -184,6 +189,10 @@ def postDelete(request: HttpRequest, pk: int):
 @login_required(login_url="admin:index")
 def postEdit(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
+
+    user = post.author
+    if not user == request.user:
+        return HttpResponse("You dont have access to this post!")
 
     if request.method == "POST":
         form = CreatePostForm(request.POST, request.FILES, instance=post)
@@ -213,9 +222,9 @@ def postEdit(request: HttpRequest, pk: int):
 def imageDelete(request: HttpRequest, pk: int):
     img = get_object_or_404(Image, id=pk)
     user = img.post.author
-    
+
     if not user == request.user:
         return HttpResponse("You dont have access to this image!")
-    
+
     img.delete()
     return redirect("blog:profile")
