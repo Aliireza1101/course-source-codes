@@ -1,5 +1,5 @@
 {% extends "parent/base.html" %}
-{% block title %}Create | Blog{% endblock title %}
+{% block title %}Edit | Blog{% endblock title %}
 {% block content %}
 
     <h1>Edit a Post</h1>
@@ -28,6 +28,17 @@
                 <p class="error-message">{{ error }}</p>
             {% endfor %}
         {% endif %}
+
+        <div>
+            {% for img in post.images.all %}
+                <div>
+                    <a href={{ img.image_file.url }} >{{ img }}</a>
+                    <a href="{% url 'blog:image_delete' img.id %}">Delete</a></br>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h3>Upload New image : </h3>
 
         <p>{{ form.image1.label }} :</p>
         <input id="image1" type="file" {% if form.image1.value %}value={{ form.image1.value }} {% endif %} name="image1">

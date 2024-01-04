@@ -208,5 +208,14 @@ def postEdit(request: HttpRequest, pk: int):
     )
 
 
+@require_GET
+@login_required(login_url="admin:index")
 def imageDelete(request: HttpRequest, pk: int):
-    return HttpResponse("Response for imageDelete")
+    img = get_object_or_404(Image, id=pk)
+    user = img.post.author
+    
+    if not user == request.user:
+        return HttpResponse("You dont have access to this image!")
+    
+    img.delete()
+    return redirect("blog:profile")
