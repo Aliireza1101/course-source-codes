@@ -197,7 +197,6 @@ def postEdit(request: HttpRequest, pk: int):
                 if img:
                     Image(image_file=img, post=new_post).save()
 
-
             return redirect("blog:profile")
     else:
         form = CreatePostForm(instance=post)
@@ -207,3 +206,7 @@ def postEdit(request: HttpRequest, pk: int):
     return render(
         request=request, template_name="forms/edit-post.html", context=context
     )
+
+
+def imageDelete(request: HttpRequest, pk: int):
+    return HttpResponse("Response for imageDelete")
