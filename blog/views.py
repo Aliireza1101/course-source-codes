@@ -104,8 +104,9 @@ def createPost(request: HttpRequest):  # Create Post view
             new_post.author = request.user
             new_post.save()
 
-            Image(image_file=data["image1"], post=new_post).save()
-            Image(image_file=data["image2"], post=new_post).save()
+            for img in [data["image1"], data["image2"]]:
+                if img:
+                    Image(image_file=img, post=new_post).save()
 
             return redirect("blog:post_list")
     else:
