@@ -20,7 +20,7 @@ def index(request: HttpRequest):  # Render template for url /blog/
 def postList(request: HttpRequest):  # Show list of posts
     posts = Post.published.all()
 
-    paginator = Paginator(posts, 3)
+    paginator = Paginator(posts, 6)
     page_number = request.GET.get("page")
 
     try:

@@ -129,7 +129,7 @@
 											<img class="rounded-3" src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">
 										{% else %}
 											<img class="rounded-3" src="{% static 'images/no-photo.jpg' %}" alt="{{ post.images.first.title }}">
-										{% endif %}>
+										{% endif %}
 									</div>
 									<div class="col-8">
 										<h6><a href="{{post.get_absolute_url}}" class="btn-link stretched-link text-reset">{{post.title}}</a></h6>
