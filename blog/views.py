@@ -4,12 +4,13 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
+from django.contrib.auth import authenticate, login
 from django.db.models import Model, Manager, QuerySet
 
 import itertools
 
 from .models import Post, Ticket, Comment, Image
-from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm
+from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm, LoginForm
 
 
 # Create your views here.
@@ -158,7 +159,7 @@ def postSearch(request: HttpRequest):
     return render(request=request, template_name="blog/search.html", context=context)
 
 
-@login_required(login_url="admin:index")
+@login_required(login_url="blog:login")
 def profile(request: HttpRequest):
     user = request.user
     posts = user.posts.order_by("-create_date")
@@ -186,7 +187,7 @@ def postDelete(request: HttpRequest, pk: int):
     )
 
 
-@login_required(login_url="admin:index")
+@login_required(login_url="blog:login")
 def postEdit(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
 
@@ -218,7 +219,7 @@ def postEdit(request: HttpRequest, pk: int):
 
 
 @require_GET
-@login_required(login_url="admin:index")
+@login_required(login_url="blog:login")
 def imageDelete(request: HttpRequest, pk: int):
     img = get_object_or_404(Image, id=pk)
     user = img.post.author
@@ -227,4 +228,30 @@ def imageDelete(request: HttpRequest, pk: int):
         return HttpResponse("You dont have access to this image!")
 
     img.delete()
+    return redirect("blog:profile")
+
+
+def loginView(request: HttpRequest):
+    """Logs a user into the site."""
+    user = request.user
+    if not user.is_authenticated:
+        if request.method == "POST":
+            form = LoginForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                user = authenticate(
+                    request, username=data["username"], password=data["password"]
+                )
+                if user:
+                    if user.is_active:
+                        login(request, user)
+                        return redirect("blog:profile")
+                    return HttpResponse("Your account is disabled")
+                return HttpResponse("Incorrect credentials")
+        else:
+            form = LoginForm()
+        context = {"form": form}
+        return render(
+            request=request, template_name="forms/login.html", context=context
+        )
     return redirect("blog:profile")

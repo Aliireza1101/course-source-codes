@@ -6,7 +6,7 @@ from .models import Comment, Post
 
 
 # Create your forms here.
-class TicketForm(forms.Form): # Form to create a ticket
+class TicketForm(forms.Form):  # Form to create a ticket
     class Subject(TextChoices):
         proposal = "PP", "Proposal"
         feedback = "FB", "Feedback"
@@ -29,7 +29,7 @@ class TicketForm(forms.Form): # Form to create a ticket
                 return phone_number
 
 
-class CommentForm(forms.ModelForm): # Form to create a comment
+class CommentForm(forms.ModelForm):  # Form to create a comment
     class Meta:
         model = Comment
         fields = ("text",)
@@ -59,3 +59,10 @@ class CreatePostForm(forms.ModelForm):  # Form to create a post
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=255, required=True)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=32, required=True)
+    password = forms.CharField(
+        max_length=32, required=True, widget=forms.PasswordInput()
+    )

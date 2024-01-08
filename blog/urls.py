@@ -15,4 +15,5 @@ urlpatterns = [
     path("search/", view=views.postSearch, name="post_search"),
     path("profile/", view=views.profile, name="profile"),
     path("profile/delete-image/<pk>", view=views.imageDelete, name="image_delete"),
+    path("login/", view=views.loginView, name="login")
 ]
