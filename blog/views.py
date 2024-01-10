@@ -159,7 +159,7 @@ def postSearch(request: HttpRequest):
     return render(request=request, template_name="blog/search.html", context=context)
 
 
-@login_required(login_url="blog:login")
+@login_required()
 def profile(request: HttpRequest):
     user = request.user
     posts = user.posts.order_by("-create_date")
@@ -169,7 +169,7 @@ def profile(request: HttpRequest):
     return render(request=request, template_name="blog/profile.html", context=context)
 
 
-@login_required(login_url="admin:index")
+@login_required()
 def postDelete(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
 
@@ -187,7 +187,7 @@ def postDelete(request: HttpRequest, pk: int):
     )
 
 
-@login_required(login_url="blog:login")
+@login_required()
 def postEdit(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
 
@@ -219,7 +219,7 @@ def postEdit(request: HttpRequest, pk: int):
 
 
 @require_GET
-@login_required(login_url="blog:login")
+@login_required()
 def imageDelete(request: HttpRequest, pk: int):
     img = get_object_or_404(Image, id=pk)
     user = img.post.author
@@ -231,27 +231,27 @@ def imageDelete(request: HttpRequest, pk: int):
     return redirect("blog:profile")
 
 
-def loginView(request: HttpRequest):
-    """Logs a user into the site."""
-    user = request.user
-    if not user.is_authenticated:
-        if request.method == "POST":
-            form = LoginForm(request.POST)
-            if form.is_valid():
-                data = form.cleaned_data
-                user = authenticate(
-                    request, username=data["username"], password=data["password"]
-                )
-                if user:
-                    if user.is_active:
-                        login(request, user)
-                        return redirect("blog:profile")
-                    return HttpResponse("Your account is disabled")
-                return HttpResponse("Incorrect credentials")
-        else:
-            form = LoginForm()
-        context = {"form": form}
-        return render(
-            request=request, template_name="forms/login.html", context=context
-        )
-    return redirect("blog:profile")
+# def loginView(request: HttpRequest):
+#     """Logs a user into the site."""
+#     user = request.user
+#     if not user.is_authenticated:
+#         if request.method == "POST":
+#             form = LoginForm(request.POST)
+#             if form.is_valid():
+#                 data = form.cleaned_data
+#                 user = authenticate(
+#                     request, username=data["username"], password=data["password"]
+#                 )
+#                 if user:
+#                     if user.is_active:
+#                         login(request, user)
+#                         return redirect("blog:profile")
+#                     return HttpResponse("Your account is disabled")
+#                 return HttpResponse("Incorrect credentials")
+#         else:
+#             form = LoginForm()
+#         context = {"form": form}
+#         return render(
+#             request=request, template_name="forms/login.html", context=context
+#         )
+#     return redirect("blog:profile")

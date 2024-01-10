@@ -1,0 +1,6 @@
+{% extends "parent/base.html" %}
+{% load blog_tags %}
+{% block content %}
+    <h1>You logged out successfuly</h1>
+    <a href="{% url "blog:login" %}">Login again</a>
+{% endblock content %}

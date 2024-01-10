@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.contrib.auth.views import LoginView, LogoutView
+
 
 app_name = "blog"
 
@@ -15,5 +17,6 @@ urlpatterns = [
     path("search/", view=views.postSearch, name="post_search"),
     path("profile/", view=views.profile, name="profile"),
     path("profile/delete-image/<pk>", view=views.imageDelete, name="image_delete"),
-    path("login/", view=views.loginView, name="login")
+    path("login/", view=LoginView.as_view(), name="login"),
+    path("logout/", view=LogoutView.as_view(), name="logout")
 ]
