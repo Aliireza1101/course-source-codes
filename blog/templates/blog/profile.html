@@ -69,8 +69,15 @@
         </div>
     </div>
     </div>
+    <br>
     <form method="post" action="{% url 'blog:logout' %}">
         {% csrf_token %}
-        <button type="submit">logout</button>
+        <button type="submit">Log out</button>
     </form>
+    <br>
+    <form method="post" action="{% url 'blog:change_password' %}">
+        {% csrf_token %}
+        <button type="submit">Change Password</button>
+    </form>
+    <br>
 {% endblock content %}
