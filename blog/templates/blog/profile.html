@@ -86,24 +86,22 @@
                                 </td>
                                 <!-- Table data -->
                                 <td>
-                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title
-                                        }}</a>
+                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title}}</a>
                                 </td>
                                 <!-- Table data -->
                                 <td>{{ post.publish|time:"%Y/%m/%d-%H:%M" }}</td>
 
                                 <!-- Table data -->
                                 <td>
-                                    <span class="badge bg-warning bg-opacity-15 text-warning mb-2">{{
-                                        post.status}}</span>
+                                    <span class="badge bg-warning bg-opacity-15 text-warning mb-2">{{ post.status }}</span>
                                 </td>
                                 <!-- Table data -->
                                 <td>
                                     <div class="d-flex gap-2">
-                                        <a href="{% url 'blog:delete_post' post.id %}"
+                                        <a href="{% url 'blog:post_delete' post.id %}"
                                             class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
                                             data-bs-placement="top" title="حذف"><i class="bi bi-trash"></i></a>
-                                        <a href="{% url 'blog:edit_post' post.id%}" class="btn btn-light btn-round mb-0"
+                                        <a href="{% url 'blog:post_edit' post.id%}" class="btn btn-light btn-round mb-0"
                                             data-bs-toggle="tooltip" data-bs-placement="top" title="ویرایش"><i
                                                 class="bi bi-pencil-square"></i></a>
                                     </div>

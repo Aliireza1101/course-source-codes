@@ -1,6 +1,6 @@
 {% extends "parent/base.html" %}
 {% load blog_tags %}
-{% block title %}Search | Blog{% endblock title %}
+{% block title %}Search{% endblock title %}
 {% block content %}
     {% with result.count as post_count %}
     <h3 class="post-count">{{ post_count }} related post{{ post_count|pluralize }} found</h3>

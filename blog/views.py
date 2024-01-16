@@ -15,7 +15,8 @@ from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm, LoginFor
 
 # Create your views here.
 def index(request: HttpRequest):  # Render template for url /blog/
-    return render(request=request, template_name="blog/index.html")
+    last_post = Post.published.all().order_by('-publish_date')[0]
+    return render(request, "blog/index.html", {"last_post": last_post})
 
 
 def postList(request: HttpRequest):  # Show list of posts
