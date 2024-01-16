@@ -1,83 +1,147 @@
-{% extends "parent/base.html" %}
+{% extends 'parent/base.html' %}
+{% block title %}Profile{% endblock %}
+{% load static %}
 {% load blog_tags %}
-{% block title %}User Dashboard{% endblock title %}
-{% block content %}<div class="user-dashboard">
-    <div class="user-dashboard ud-container">
-    <div class="user-info ud-user-info-container">
-        <h1 class="ud-username">Welcome, {{user.username}} !</h1>
-        <button class="create-post ud-create-post-button" onclick="location.href='{% url 'blog:create_post' %}'">Create Post</button>
+{% block head %} {% endblock %}
+{% block content %}
+<!-- Preloader START -->
+<div class="preloader">
+    <div class="loader">
+        <div class="sh1"></div>
+        <div class="sh2"></div>
     </div>
-    <div class="user-menus ud-user-menus-container">
-        <div class="user-posts ud-user-posts-container">
-        {% if posts %}
-        <h2 class="ud-user-posts-title">Your Posts</h2>
-        <table class="ud-user-posts-table">
-            <thead class="ud-user-posts-table-head">
-            <tr class="ud-user-posts-table-row">
-                <th class="ud-user-posts-table-header">Title</th>
-                <th class="ud-user-posts-table-header">Creation Date</th>
-                <th class="ud-user-posts-table-header">Status</th>
-                <th class="ud-user-posts-table-header">Actions</th>
-            </tr>
-            </thead>
-            <tbody class="ud-user-posts-table-body">
-            {% for post in posts %}
-            <tr class="ud-user-posts-table-row">
-                <td class="ud-user-posts-table-data"><a href="{{post.get_absolute_url}}" class="ud-user-posts-table-link">{{post.title}}</a></td>
-                <td class="ud-user-posts-table-data">{{post.create_date}}</td>
-                <td class="ud-user-posts-table-data">{{post.status}}</td>
-                <td class="ud-user-posts-table-data">
-                <button class="delete-post ud-delete-post-button" onclick="location.href='{% url 'blog:post_delete' post.id %}'">Delete</button>
-                <button class="edit-post ud-edit-post-button" onclick="location.href='{% url 'blog:post_edit' post.id %}'">Edit</button>
-                </td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p>No posts found!</p>
-        <p class="ud-user-create-post"><a href={% url 'blog:create_post'  %} class="ud-user-create-post-link">CREATE A POST</a></p>
-        {% endif %}
+</div>
+<!-- Preloader END -->
+
+<section class="py-4">
+    <div class="container">
+        <div class="row pb-4">
+            <div class="col-12">
+                <!-- Title -->
+                <div class="d-sm-flex justify-content-sm-between align-items-center">
+                    <h1 class="mb-2 mb-sm-0 h3">منوی کاربری</h1>
+                    <a href="{% url 'blog:create_post' %}" class="btn btn-sm btn-primary mb-0"><i
+                            class="fas fa-plus me-2"></i>ایجاد پست جدید</a>
+                </div>
+            </div>
         </div>
-        <div class="user-tickets ud-user-tickets-container">
-        {% if tickets %}
-        <h2 class="ud-user-tickets-title">Your Tickets</h2>
-        <table class="ud-user-tickets-table">
-            <thead class="ud-user-tickets-table-head">
-            <tr class="ud-user-tickets-table-row">
-                <th class="ud-user-tickets-table-header">Ticket Title</th>
-                <th class="ud-user-tickets-table-header">Ticket Subject</th>
-                <th class="ud-user-tickets-table-header">Status</th>
-                <th class="ud-user-tickets-table-header">Creation Date</th>
-            </tr>
-            </thead>
-            <tbody class="ud-user-tickets-table-body">
-            {% for ticket in tickets %}
-            <tr class="ud-user-tickets-table-row">
-                <td class="ud-user-tickets-table-data">{{ticket.title}}</td>
-                <td class="ud-user-tickets-table-data">{{ticket.subject}}</td>
-                <td class="ud-user-tickets-table-data">{% if ticket.active %}"Answered" {% else %} "Wating" {% endif %}</td>
-                <td class="ud-user-tickets-table-data">{{ticket.create_date}}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <p class="ud-user-no-ticket">No tickets!</p>
-        <p class="ud-user-create-ticket"><a href={% url 'blog:ticket'  %} class="ud-user-create-ticket-link">CREATE A TICKET</a></p>
-        {% endif %}
+        <div class="row">
+            <div class="col-12">
+
+                <div class="row g-4 mb-4">
+                    <div class="col-sm-4 col-lg-2">
+                        <!-- Card START -->
+                        <div class="card card-body border h-120">
+                            <!-- Icon -->
+                            <div class="fs-5 text-start text-success">
+                                <a class="dropdown-item" href="{% url 'blog:change_password' %}"><i
+                                        class="bi bi-gear fa-fw me-2"></i>تغییر پسورد</a>
+                            </div>
+                            <!-- Content -->
+                        </div>
+                        <!-- Card END -->
+                    </div>
+
+                    <div class="col-sm-4 col-lg-2">
+                        <!-- Card START -->
+                        <div class="card card-body border h-120">
+                            <!-- Icon -->
+                            <div class="fs-5 text-start text-success">
+                                <a class="dropdown-item" href="{% url 'blog:logout' %}"><i
+                                        class="bi bi-power fa-fw me-2"></i>خروج</a>
+                            </div>
+                            <!-- Content -->
+                        </div>
+                        <!-- Card END -->
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- Post list table START -->
+            <div class="card border bg-transparent rounded-3">
+
+                <!-- Post list table START -->
+                <div class="table-responsive border-0">
+                    <table class="table align-middle p-4 mb-0 table-hover table-shrink">
+                        <!-- Table head -->
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col" class="border-0">ردیف</th>
+                                <th scope="col" class="border-0">عنوان</th>
+                                <th scope="col" class="border-0">تاریخ انتشار</th>
+                                <th scope="col" class="border-0">وضعیت</th>
+                                <th scope="col" class="border-0 rounded-end">عملیات</th>
+                            </tr>
+                        </thead>
+
+                        <!-- Table body START -->
+                        <tbody class="border-top-0">
+                            <!-- Table item -->
+                            {% for post in posts %}
+                            <tr>
+                                <!-- Table data -->
+                                <td>
+                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter}}</a></h6>
+                                </td>
+                                <!-- Table data -->
+                                <td>
+                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title
+                                        }}</a>
+                                </td>
+                                <!-- Table data -->
+                                <td>{{ post.publish|time:"%Y/%m/%d-%H:%M" }}</td>
+
+                                <!-- Table data -->
+                                <td>
+                                    <span class="badge bg-warning bg-opacity-15 text-warning mb-2">{{
+                                        post.status}}</span>
+                                </td>
+                                <!-- Table data -->
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'blog:delete_post' post.id %}"
+                                            class="btn btn-light btn-round mb-0" data-bs-toggle="tooltip"
+                                            data-bs-placement="top" title="حذف"><i class="bi bi-trash"></i></a>
+                                        <a href="{% url 'blog:edit_post' post.id%}" class="btn btn-light btn-round mb-0"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="ویرایش"><i
+                                                class="bi bi-pencil-square"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <!-- Table body END -->
+                    </table>
+                </div>
+                <!-- Post list table END -->
+            </div>
         </div>
+        <!-- Post list table END -->
     </div>
     </div>
-    <br>
-    <form method="post" action="{% url 'blog:logout' %}">
-        {% csrf_token %}
-        <button type="submit">Log out</button>
-    </form>
-    <br>
-    <form method="post" action="{% url 'blog:change_password' %}">
-        {% csrf_token %}
-        <button type="submit">Change Password</button>
-    </form>
-    <br>
-{% endblock content %}
+    </div>
+</section>
+<!-- =======================
+Main contain END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- Back to top -->
+<div class="back-top"><i class="bi bi-arrow-up-short"></i></div>
+<!-- =======================
+JS libraries, plugins and custom scripts -->
+
+<!-- Bootstrap JS -->
+<script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+<!-- Vendors -->
+<script src="{% static 'vendor/apexcharts/js/apexcharts.min.js' %}"></script>
+<script src="{% static 'vendor/quill/js/quill.min.js' %}"></script>
+
+<!-- Template Functions -->
+<script src="{% static 'js/functions.js' %}"></script>
+
+
+{% endblock %}
