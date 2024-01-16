@@ -15,25 +15,17 @@
         
         <section class="post-content">
             {% for image in post.images.all %}
-                {% if forloop.counter == 1 %}
-                
-                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
-
-                <p>{{ post.description | censor:'*' | markdown }}</p>
-                
+                {% if forloop.counter == 1 %}                
+                    <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
+                    <p>{{ post.description | censor:'*' | markdown }}</p>
                 {% elif forloop.counter == 2 %}
-                
-                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
-                
+                    <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
                 {% else %}
-                
-                <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img
-                
+                    <img src='{{ image.image_file.url }}' alt='{{ image.title }}'></img>
                 {% endif %}
             {% endfor %}
         </section>
     </article>
-    
     <div class="comment-section">
         {% with comments.count as cm_count %}
         <h3 class="comment-count">{{ cm_count }} comment{{ cm_count|pluralize }} on this post</h3>
