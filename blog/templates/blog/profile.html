@@ -82,14 +82,14 @@
                             <tr>
                                 <!-- Table data -->
                                 <td>
-                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter}}</a></h6>
+                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter }}</a></h6>
                                 </td>
                                 <!-- Table data -->
                                 <td>
-                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title}}</a>
+                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title }}</a>
                                 </td>
-                                <!-- Table data -->
-                                <td>{{ post.publish|time:"%Y/%m/%d-%H:%M" }}</td>
+                                <!-- Table data %Y/%m/%d-%H:%M -->
+                                <td>{{ post.publish_date|date }}</td>
 
                                 <!-- Table data -->
                                 <td>

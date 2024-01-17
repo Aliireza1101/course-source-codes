@@ -54,7 +54,7 @@
 					<a href="{% url 'blog:profile' %}" class="btn btn-sm btn-danger mb-0 mx-2">{{ request.user.username }}</a>
 				</div>
                 {% else %}
-                    <a href="#" class="btn btn-sm btn-danger mb-0 mx-2">ورود</a>
+                    <a href="{% url 'blog:login' %}" class="btn btn-sm btn-danger mb-0 mx-2">ورود</a>
 				{% endif %}
 
 				<!-- Nav Search -->

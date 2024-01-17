@@ -19,9 +19,9 @@
             <h4 class="card-title"><a href="{{ post.get_absolute_url }}" class="btn-link text-reset stretched-link">{{ post.title }}</a></h4>
             <!-- Card info -->
             <p>{{ post.description | markdown | truncatewords:50 }}</p>
-            <!-- Card info -->
+            <!-- Card info %Y/%m/%d-%H:%M -->
             <ul class="nav nav-divider align-items-center">
-                <li class="nav-item">{{ post.publish_date|time:"%Y/%m/%d-%H:%M" }}</li>
+                <li class="nav-item">{{ post.publish_date|date }}</li>
             </ul>
         </div>
     </div>
