@@ -1,6 +1,8 @@
 from django import forms
 from django.db.models import TextChoices
 from better_profanity import profanity
+from django.contrib.auth.forms import AuthenticationForm
+
 
 from .models import Comment, Post
 
@@ -42,6 +44,30 @@ class CreatePostForm(forms.ModelForm):  # Form to create a post
     class Meta:
         fields = ["title", "description", "reading_time"]
         model = Post
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "id": "con-name",
+                }
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": "5",
+                }
+            ),
+            "reading_time": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "category": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+        }
 
     def clean_title(self):  # validation for title
         title: str = self.cleaned_data["title"]
@@ -61,8 +87,14 @@ class SearchForm(forms.Form):
     query = forms.CharField(max_length=255, required=True)
 
 
-class LoginForm(forms.Form):
-    username = forms.CharField(max_length=32, required=True)
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        max_length=250,
+        required=True,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
     password = forms.CharField(
-        max_length=32, required=True, widget=forms.PasswordInput()
+        max_length=250,
+        required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )

@@ -146,4 +146,5 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 LOGIN_REDIRECT_URL = "/blog/profile/"
 LOGIN_URL = "/blog/login/"
-LOGOUT_URL = "/blog/login/"
+LOGOUT_URL = "/blog/logout/"
+

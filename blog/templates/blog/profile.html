@@ -35,7 +35,37 @@
                             <!-- Icon -->
                             <div class="fs-5 text-start text-success">
                                 <a class="dropdown-item" href="{% url 'blog:change_password' %}"><i
-                                        class="bi bi-gear fa-fw me-2"></i>تغییر پسورد</a>
+                                        class="bi bi-pen fa-fw me-2"></i>تغییر پسورد</a>
+                            </div>
+                            <!-- Content -->
+                        </div>
+                        <!-- Card END -->
+                    </div>
+
+                    <div class="col-sm-4 col-lg-3">
+                        <!-- Card START -->
+                        <div class="card card-body border h-120">
+                            <!-- Icon -->
+                            <div class="fs-5 text-start text-success">
+                                <a class="dropdown-item" href="#"><i
+                                        class="bi bi-pencil fa-fw me-2"></i>تغییر اطلاعات شخصی</a>
+                            </div>
+                            <!-- Content -->
+                        </div>
+                        <!-- Card END -->
+                    </div>
+
+
+                    <div class="col-sm-4 col-lg-2">
+                        <!-- Card START -->
+                        <div class="card card-body border h-120">
+                            <!-- Icon -->
+                            <div class="fs-5 text-start text-success">
+                                <form action="{% url 'blog:logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="dropdown-item" onclick="location.href='{% url 'blog:logout' %}'"><i
+                                            class="bi bi-power fa-fw me-2"></i>خروج</button>
+                                </form>
                             </div>
                             <!-- Content -->
                         </div>
@@ -47,8 +77,8 @@
                         <div class="card card-body border h-120">
                             <!-- Icon -->
                             <div class="fs-5 text-start text-success">
-                                <a class="dropdown-item" href="{% url 'blog:logout' %}"><i
-                                        class="bi bi-power fa-fw me-2"></i>خروج</a>
+                                <a class="dropdown-item" href="{% url 'blog:ticket' %}"><i
+                                        class="bi bi-messenger fa-fw me-2"></i>ارسال تیکت</a>
                             </div>
                             <!-- Content -->
                         </div>

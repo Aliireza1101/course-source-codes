@@ -15,7 +15,7 @@ from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm, LoginFor
 
 # Create your views here.
 def index(request: HttpRequest):  # Render template for url /blog/
-    last_post = Post.published.all().order_by('-publish_date')[0]
+    last_post = Post.published.all().order_by("-publish_date")[0]
     return render(request, "blog/index.html", {"last_post": last_post})
 
 
@@ -173,15 +173,12 @@ def profile(request: HttpRequest):
 @login_required()
 def postDelete(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
-
     user = post.author
     if not user == request.user:
         return HttpResponse("You dont have access to this post!")
-
     if request.method == "POST":
         post.delete()
         return redirect("blog:profile")
-
     return render(
         request=request,
         template_name="forms/delete-post.html",
@@ -191,7 +188,6 @@ def postDelete(request: HttpRequest, pk: int):
 @login_required()
 def postEdit(request: HttpRequest, pk: int):
     post = get_object_or_404(Post, id=pk)
-
     user = post.author
     if not user == request.user:
         return HttpResponse("You dont have access to this post!")
@@ -203,19 +199,15 @@ def postEdit(request: HttpRequest, pk: int):
             new_post = form.save(commit=False)
             new_post.author = request.user
             new_post.save()
-
             for img in [data["image1"], data["image2"]]:
                 if img:
                     Image(image_file=img, post=new_post).save()
-
             return redirect("blog:profile")
     else:
         form = CreatePostForm(instance=post)
-
     context = {"post": post, "form": form}
-
     return render(
-        request=request, template_name="forms/edit-post.html", context=context
+        request=request, template_name="forms/post.html", context=context
     )
 
 
@@ -224,10 +216,8 @@ def postEdit(request: HttpRequest, pk: int):
 def imageDelete(request: HttpRequest, pk: int):
     img = get_object_or_404(Image, id=pk)
     user = img.post.author
-
     if not user == request.user:
         return HttpResponse("You dont have access to this image!")
-
     img.delete()
     return redirect("blog:profile")
 

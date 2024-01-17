@@ -1,10 +1,19 @@
-{% extends "parent/base.html" %}
-{% block title %}Blog | Delete{% endblock title %}
+{% extends 'parent/base.html' %}
+{% load jformat %}
+{% block title %}Delete Post{% endblock %}
+
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <h2>Are you sure ?</h2>
-        <button onclick="location.href='{% url 'blog:profile' %}'" >Back</button>
-        <input type="submit" value='Delete'>
-    </form>
-{% endblock content %}
+<div class="centered mb-4 text-center">
+    <h2 class="h1 m-0"> آیا از حذف پست ({{ post.title }}) مطمعن هستید؟ </h2>
+    <br>
+    <a href="{% url 'blog:profile' %}" class="btn btn-dark mb-0"> برگشت به صفحه پروفایل</a>
+</div>
+<br>
+<form method="post">
+    {% csrf_token %}
+    <div class="centered mb-4 text-center">
+        <button class="btn btn-primary center" type="submit">حذف</button>
+    </div>
+
+</form>
+{% endblock %}
