@@ -32,6 +32,7 @@ urlpatterns = [
 
     path("login/", view=LoginView.as_view(), name="login"),
     path("logout/", view=LogoutView.as_view(), name="logout"),
+    path("register/", view=views.register, name="register"),
     
     path("change-password/", view=PasswordChangeView.as_view(success_url="done"), name="change_password"),
     path("change-password/done/", view=PasswordChangeDoneView.as_view(), name="change_password_done"),

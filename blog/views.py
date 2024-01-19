@@ -1,11 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
+
 from django.contrib.postgres.search import TrigramSimilarity
-from django.contrib.auth import authenticate, login
-from django.db.models import Model, Manager, QuerySet
+from django.db.models import QuerySet
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 import itertools
 
@@ -206,9 +210,7 @@ def postEdit(request: HttpRequest, pk: int):
     else:
         form = CreatePostForm(instance=post)
     context = {"post": post, "form": form}
-    return render(
-        request=request, template_name="forms/post.html", context=context
-    )
+    return render(request=request, template_name="forms/post.html", context=context)
 
 
 @require_GET
@@ -246,3 +248,20 @@ def imageDelete(request: HttpRequest, pk: int):
 #             request=request, template_name="forms/login.html", context=context
 #         )
 #     return redirect("blog:profile")
+
+
+def register(request: HttpRequest):
+    context = {}
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            new_user: User = form.save(commit=False)
+            new_user.set_password(form.cleaned_data.get("password1"))
+            new_user.save()
+            context.update({"user": new_user})
+            return render(request, "registration/register_done.html", context)
+    else:
+        form = UserCreationForm()
+
+    context.update({"form": form})
+    return render(request, "registration/register_form.html", context)
