@@ -186,6 +186,7 @@ def postDelete(request: HttpRequest, pk: int):
     return render(
         request=request,
         template_name="forms/delete-post.html",
+        context={"post": post},
     )
 
 
