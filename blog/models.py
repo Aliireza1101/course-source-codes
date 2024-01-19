@@ -171,7 +171,7 @@ class Image(models.Model):
 
 class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="account")
-    date_of_birth = models.DateTimeField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
     bio = models.TextField()
     photo = ResizedImageField(
         size=[500, 500],
@@ -184,4 +184,3 @@ class Account(models.Model):
     # class Meta:
     #     verbose_name = "اکانت"
     #     verbose_name_plural = "اکانت ها"
-    

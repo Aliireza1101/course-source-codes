@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Ticket, Comment, Image
+from .models import Post, Ticket, Comment, Image, Account
 
 
 # Title
@@ -13,6 +13,7 @@ from .models import Post, Ticket, Comment, Image
 class ImageInline(admin.StackedInline):
     model = Image
     extra = 0
+
 
 class CommentInline(admin.StackedInline):
     model = Comment
@@ -35,13 +36,19 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ["title", "description", "author__first_name", "author__last_name"]
     raw_id_fields = ["author"]
 
-    inlines = (ImageInline, CommentInline,)
+    inlines = (
+        ImageInline,
+        CommentInline,
+    )
+
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
     list_display = ["author", "title", "subject", "active"]
     list_editable = ["subject", "active"]
-    list_display_links = ["title",]
+    list_display_links = [
+        "title",
+    ]
     list_filter = ["subject"]
 
     search_fields = ["title", "message"]
@@ -74,3 +81,16 @@ class ImageAdmin(admin.ModelAdmin):
 
     search_fields = ["title", "description", "post__title"]
     raw_id_fields = ["post"]
+
+
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = ["user", "date_of_birth"]
+    list_display_links = list_display
+    list_filter = ["date_of_birth"]
+
+    ordering = ["date_of_birth"]
+    date_hierarchy = "date_of_birth"
+
+    search_fields = ["user__username", "user__first_name", "user__last_name"]
+    raw_id_fields = ["user"]

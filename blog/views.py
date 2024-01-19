@@ -13,8 +13,15 @@ from django.contrib.auth.models import User
 
 import itertools
 
-from .models import Post, Ticket, Comment, Image
-from .forms import TicketForm, CommentForm, CreatePostForm, SearchForm, LoginForm
+from .models import Post, Ticket, Image
+from .forms import (
+    TicketForm,
+    CommentForm,
+    CreatePostForm,
+    SearchForm,
+    AccountEditForm,
+    UserEditForm,
+)
 
 
 # Create your views here.
@@ -266,3 +273,23 @@ def register(request: HttpRequest):
 
     context.update({"form": form})
     return render(request, "registration/register_form.html", context)
+
+
+def edit_account(request: HttpRequest):
+    if request.method == "POST":
+        account_form = AccountEditForm(
+            request.POST, request.FILES, instance=request.user.account
+        )
+        user_form = UserEditForm(request.POST, instance=request.user)
+        if account_form.is_valid() and user_form.is_valid():
+            account_form.save()
+            user_form.save()
+            return redirect("blog:profile")
+    else:
+        account_form = AccountEditForm(instance=request.user.account)
+        user_form = UserEditForm(instance=request.user)
+    context = {
+        "account_form": account_form,
+        "user_form": user_form
+    }
+    return render(request, "forms/edit_account.html", context)

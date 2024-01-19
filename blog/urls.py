@@ -29,6 +29,7 @@ urlpatterns = [
     
     path("profile/", view=views.profile, name="profile"),
     path("profile/delete-image/<pk>", view=views.imageDelete, name="image_delete"),
+    path("profile/edit/", view=views.edit_account, name="edit_account"),
 
     path("login/", view=LoginView.as_view(), name="login"),
     path("logout/", view=LogoutView.as_view(), name="logout"),

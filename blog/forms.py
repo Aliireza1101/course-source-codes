@@ -2,9 +2,10 @@ from django import forms
 from django.db.models import TextChoices
 from better_profanity import profanity
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
 
-from .models import Comment, Post
+from .models import Comment, Post, Account
 
 
 # Create your forms here.
@@ -98,3 +99,52 @@ class LoginForm(AuthenticationForm):
         required=True,
         widget=forms.PasswordInput(attrs={"class": "form-control"}),
     )
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+
+class AccountEditForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = [
+            "photo",
+            "date_of_birth",
+            "bio",
+            "job",
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={
+                'class': 'form-control',
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '5',
+            }),
+            'job': forms.TextInput(attrs={
+                'class': 'form-control',
+
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
