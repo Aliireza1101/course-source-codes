@@ -30,8 +30,11 @@ def index(request: HttpRequest):  # Render template for url /blog/
     return render(request, "blog/index.html", {"last_post": last_post})
 
 
-def postList(request: HttpRequest):  # Show list of posts
-    posts = Post.published.all()
+def postList(request: HttpRequest, category=None):  # Show list of posts
+    if category:
+        posts = Post.published.filter(category=category)
+    else:
+        posts = Post.published.all()
 
     paginator = Paginator(posts, 6)
     page_number = request.GET.get("page")
@@ -288,8 +291,5 @@ def edit_account(request: HttpRequest):
     else:
         account_form = AccountEditForm(instance=request.user.account)
         user_form = UserEditForm(instance=request.user)
-    context = {
-        "account_form": account_form,
-        "user_form": user_form
-    }
+    context = {"account_form": account_form, "user_form": user_form}
     return render(request, "forms/edit_account.html", context)

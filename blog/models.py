@@ -29,10 +29,10 @@ class Post(models.Model):
     class Category(models.TextChoices):
         TECHNOLOGY = "Tech", "Technology"
         PROGRAMMING = "Programming", "Programming"
-        INTERNET = "Internet", "Internet"
+        NETWORK = "Network", "Network"
         IT = "IT", "Information Technology"
         AI = "AI", "Artificial Intelligence"
-        OTHERS = "Othrs", "Others"
+        OTHERS = "Others", "Others"
 
     title = models.CharField(max_length=255)
     description = models.TextField()

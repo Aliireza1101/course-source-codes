@@ -17,7 +17,8 @@ app_name = "blog"
 urlpatterns = [
     path("", view=views.index, name="index"),
     path("posts/", view=views.postList, name="post_list"),
-    path("posts/<pk>/", view=views.postDetail, name="post_detail"),
+    path("posts/detail/<pk>/", view=views.postDetail, name="post_detail"),
+    path("posts/category/<str:category>/", view=views.postList, name="post_list_category"),
     path("create/", view=views.createPost, name="create_post"),
     
     path("posts/<pk>/add-comment/", view=views.addComment, name="add_comment"),

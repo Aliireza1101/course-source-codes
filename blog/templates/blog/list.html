@@ -79,38 +79,45 @@
 					<div>
 						<h4 class="mb-3">دسته بندی</h4>
 						<!-- Category item -->
-						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(#); background-position: center left; background-size: cover;">
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url("#"); background-position: center left; background-size: cover;">
 							<div class="bg-dark-overlay-4 p-3">
-								<a href="#" class="stretched-link btn-link text-white h5">گردشگری</a>
+								<a href="{% url 'blog:post_list_category' 'Tech' %}" class="stretched-link btn-link text-white h5">تکنولوژی</a>
 							</div>
 						</div>
 						<!-- Category item -->
-						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(#); background-position: center left; background-size: cover;">
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/02.jpg); background-position: center left; background-size: cover;">
 							<div class="bg-dark-overlay-4 p-3">
-								<a href="#" class="stretched-link btn-link text-white h5">فناوری اطلاعات</a>
+								<a href="{% url 'blog:post_list_category' 'AI' %}" class="stretched-link btn-link text-white h5">هوش مصنوعی</a>
 							</div>
 						</div>
 						<!-- Category item -->
-						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(#); background-position: center left; background-size: cover;">
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/03.jpg); background-position: center left; background-size: cover;">
 							<div class="bg-dark-overlay-4 p-3">
-								<a href="#" class="stretched-link btn-link text-white h5">فرهنگ</a>
+								<a href="{% url 'blog:post_list_category' 'Programming' %}" class="stretched-link btn-link text-white h5">زبان برنامه نویسی</a>
 							</div>
 						</div>
 						<!-- Category item -->
-						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(#); background-position: center left; background-size: cover;">
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/04.jpg); background-position: center left; background-size: cover;">
 							<div class="bg-dark-overlay-4 p-3">
-								<a href="#" class="stretched-link btn-link text-white h5">سیاست</a>
+								<a href="{% url 'blog:post_list_category' 'IT' %}" class="stretched-link btn-link text-white h5">Information Technology (IT)</a>
 							</div>
 						</div>
 						<!-- Category item -->
-						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(#); background-position: center left; background-size: cover;">
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded"
+							style="background-image:url(assets/images/blog/4by3/04.jpg); background-position: center left; background-size: cover;">
 							<div class="bg-dark-overlay-4 p-3">
-								<a href="#" class="stretched-link btn-link text-white h5">ورزش</a>
+								<a href="{% url 'blog:post_list_category' 'Network' %}" class="stretched-link btn-link text-white h5">شبکه</a>
+							</div>
+						</div>
+						<!-- Category item -->
+						<div class="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style="background-image:url(assets/images/blog/4by3/05.jpg); background-position: center left; background-size: cover;">
+							<div class="bg-dark-overlay-4 p-3">
+								<a href="{% url 'blog:post_list_category' 'Others' %}" class="stretched-link btn-link text-white h5">سایر</a>
 							</div>
 						</div>
 						<!-- View All Category button -->
 						<div class="text-center mt-3">
-							<a href="#" class="text-muted text-primary-hover"><u>مشاهده همه</u></a>
+							<a href="{% url 'blog:post_list' %}" class="text-muted text-primary-hover"><u>مشاهده همه</u></a>
 						</div>
 					</div>
 					<!-- Trending topics widget END -->
