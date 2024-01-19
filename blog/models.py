@@ -26,6 +26,14 @@ class Post(models.Model):
         rejected = "RJ", "Rejected"
         drafted = "DR", "Drafted"
 
+    class Category(models.TextChoices):
+        TECHNOLOGY = "Tech", "Technology"
+        PROGRAMMING = "Programming", "Programming"
+        INTERNET = "Internet", "Internet"
+        IT = "IT", "Information Technology"
+        AI = "AI", "Artificial Intelligence"
+        OTHERS = "Othrs", "Others"
+
     title = models.CharField(max_length=255)
     description = models.TextField()
     slug = models.SlugField(max_length=255)
@@ -39,6 +47,10 @@ class Post(models.Model):
     publish_date = models.DateTimeField(default=timezone.now)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+
+    category = models.CharField(
+        max_length=255, choices=Category.choices, default=Category.OTHERS
+    )
 
     # Managers :
     objects = models.Manager()
