@@ -9,18 +9,18 @@ from django.template.defaultfilters import slugify
 
 
 # Create your managers here.
-class PostPublishManager(models.Manager):
+class PostPublishManager(models.Manager): # Manager to get only published posts
     def get_queryset(self) -> QuerySet:
         return super().get_queryset().filter(status=Post.Status.published)
 
 
-class CommentActiveManager(models.Manager):
+class CommentActiveManager(models.Manager): # Manager to get only active comments
     def get_queryset(self) -> QuerySet:
         return super().get_queryset().filter(is_active=True)
 
 
 # Create your models here.
-class Post(models.Model):
+class Post(models.Model): # Posts
     class Status(models.TextChoices):
         published = "PB", "Published"
         rejected = "RJ", "Rejected"
@@ -86,7 +86,7 @@ class Post(models.Model):
         return super().save(args, kwargs)
 
 
-class Ticket(models.Model):
+class Ticket(models.Model): # Tickets
     class Subject(models.TextChoices):
         proposal = "PP", "Proposal"
         feedback = "FB", "Feedback"
@@ -145,7 +145,7 @@ class Comment(models.Model):
         # verbose_name_plural = "کامنت ها"
 
 
-class Image(models.Model):
+class Image(models.Model): # Images
     post = models.ForeignKey(to=Post, on_delete=models.CASCADE, related_name="images")
     image_file = ResizedImageField(
         size=[500, 500],
@@ -181,7 +181,7 @@ class Image(models.Model):
         # verbose_name_plural = "تصویر ها"
 
 
-class Account(models.Model):
+class Account(models.Model): # User's account
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="account")
     date_of_birth = models.DateField(blank=True, null=True)
     bio = models.TextField()

@@ -133,7 +133,7 @@ def createPost(request: HttpRequest):  # Create Post view
 
 
 @require_GET
-def postSearch(request: HttpRequest):
+def postSearch(request: HttpRequest): # Search for a post
     query = None
     result = []
     if request.GET.get("query"):
@@ -175,7 +175,7 @@ def postSearch(request: HttpRequest):
 
 
 @login_required()
-def profile(request: HttpRequest):
+def profile(request: HttpRequest): # User profile
     user = request.user
     posts = user.posts.order_by("-create_date")
     tickets = user.tickets.order_by("-create_date")
@@ -185,7 +185,7 @@ def profile(request: HttpRequest):
 
 
 @login_required()
-def postDelete(request: HttpRequest, pk: int):
+def postDelete(request: HttpRequest, pk: int): # Delete a post
     post = get_object_or_404(Post, id=pk)
     user = post.author
     if not user == request.user:
@@ -201,7 +201,7 @@ def postDelete(request: HttpRequest, pk: int):
 
 
 @login_required()
-def postEdit(request: HttpRequest, pk: int):
+def postEdit(request: HttpRequest, pk: int): # Edit a post
     post = get_object_or_404(Post, id=pk)
     user = post.author
     if not user == request.user:
@@ -226,7 +226,7 @@ def postEdit(request: HttpRequest, pk: int):
 
 @require_GET
 @login_required()
-def imageDelete(request: HttpRequest, pk: int):
+def imageDelete(request: HttpRequest, pk: int): # Delete image of a post
     img = get_object_or_404(Image, id=pk)
     user = img.post.author
     if not user == request.user:
@@ -261,7 +261,7 @@ def imageDelete(request: HttpRequest, pk: int):
 #     return redirect("blog:profile")
 
 
-def register(request: HttpRequest):
+def register(request: HttpRequest): # Register
     context = {}
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -278,7 +278,7 @@ def register(request: HttpRequest):
     return render(request, "registration/register_form.html", context)
 
 
-def edit_account(request: HttpRequest):
+def edit_account(request: HttpRequest): # Edit account information
     if request.method == "POST":
         account_form = AccountEditForm(
             request.POST, request.FILES, instance=request.user.account
