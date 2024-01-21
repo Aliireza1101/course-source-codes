@@ -53,7 +53,7 @@ def most_active_users(count:int=2): # Return list of most active users
 @register.inclusion_tag("partials/latest_posts.html")
 def latest_posts(count=5): # Return a list of most recent posts
     posts =  Post.published.all()[:count]
-    context = {"posts":posts}
+    context = {"l_posts":posts}
     return context
 
 

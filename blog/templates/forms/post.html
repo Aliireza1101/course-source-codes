@@ -1,34 +1,79 @@
-{% extends "parent/base.html" %}
-{% block title %}Create | Blog{% endblock title %}
+{% extends 'parent/base.html' %}
+{% block title %}Post create{% endblock %}
 {% block content %}
 
-    <h1>Create a Post</h1>
-    <form method="post" enctype="multipart/form-data" class="post-form">
-        {% csrf_token %}
-        <p>{{ form.title.label }} :</p>
-        <input id="id_title" type="text" {% if form.title.value %}value={{ form.title.value }} {% endif %} name="title">
-        {% if form.title.errors %}
-            {% for error in form.title.errors %}
-                <p class="error-message">{{ error }}</p>
-            {% endfor %}
-        {% endif %}
+<section class="py-4">
+    <div class="container">
+        <div class="row pb-4">
+            <div class="col-12">
+                <!-- Title -->
+                <h1 class="mb-0 h3">ایجاد یا ویرایش پست</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- Chart START -->
+                <div class="card border h-100">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Form START -->
 
-        <p>{{ form.description.label }} :</p>
-        <textarea id="id_description" name="description" cols="30" rows="10">{% if form.description.value %}{{ form.description.value }}{% endif %}</textarea>
-        {% if form.description.errors %}
-            {% for error in form.description.errors %}
-                <p class="error-message">{{ error }}</p>
-            {% endfor %}
-        {% endif %}
+                        <form method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12">
+                                    {% csrf_token %}
 
-        <p>{{ form.reading_time.label }} :</p>
-        <input id="id_reading_time" type="number" {% if form.reading_time.value %}value={{ form.reading_time.value }} {% endif %} name="reading_time">
-        {% if form.reading_time.errors %}
-            {% for error in form.reading_time.errors %}
-                <p class="error-message">{{ error }}</p>
-            {% endfor %}
-        {% endif %}
-        
-        <input type="submit" value='Submit' class="submit-button">
-    </form>
-{% endblock content %}
+                                    {{ form.as_p }}
+                                    {% if post %}
+                                    {% for img in post.images.all %}
+                                    <div class="row align-items-center mb-2">
+                                        <div class="col-4 col-md-2">
+                                            <div class="position-relative">
+                                                <img class="rounded mb-3" src="{{ img.image_file.url }}" alt="">
+                                                <div class="position-absolute top-0 end-0 mt-n2 me-n2">
+                                                    <a class="btn btn-icon btn-xs btn-danger"
+                                                        href="{% url 'blog:image_delete' img.id %}"><i
+                                                            class="bi bi-x"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" type="submit">ذخیره</button>
+                            </div>
+                        </form>
+
+                        <!-- Form END -->
+                    </div>
+                </div><!-- Chart END -->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script src="assets/vendor/apexcharts/js/apexcharts.min.js"></script>
+<script src="assets/vendor/quill/js/quill.min.js"></script>
+
+<!-- Template Functions -->
+<script src="assets/js/functions.js"></script>
+<!-- Btn Upload -->
+<script>
+    document.querySelector(".upload-button").addEventListener("click", () => {
+        //clicks on the file input
+        document.querySelector(".hidden-upload").click();
+    });
+    //adds event listener on the hidden file input to listen for any changes
+    document.querySelector(".hidden-upload").addEventListener("change", (event) => {
+        //gets the file name
+        document.querySelector(".upload-name").value = event.target.files[0].name;
+    });
+</script>
+
+{% endblock %}

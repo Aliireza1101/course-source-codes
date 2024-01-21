@@ -1,12 +1,15 @@
 from django import forms
 from django.db.models import TextChoices
 from better_profanity import profanity
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 
-from .models import Comment, Post
+
+from .models import Comment, Post, Account
 
 
 # Create your forms here.
-class TicketForm(forms.Form): # Form to create a ticket
+class TicketForm(forms.Form):  # Form to create a ticket
     class Subject(TextChoices):
         proposal = "PP", "Proposal"
         feedback = "FB", "Feedback"
@@ -29,16 +32,43 @@ class TicketForm(forms.Form): # Form to create a ticket
                 return phone_number
 
 
-class CommentForm(forms.ModelForm): # Form to create a comment
+class CommentForm(forms.ModelForm):  # Form to create a comment
     class Meta:
         model = Comment
         fields = ("text",)
 
 
-class PostForm(forms.ModelForm):  # Form to create a post
+class CreatePostForm(forms.ModelForm):  # Form to create a post
+    image1 = forms.ImageField(required=False, label="First image")
+    image2 = forms.ImageField(required=False, label="Second image")
+
     class Meta:
         fields = ["title", "description", "reading_time"]
         model = Post
+        widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "id": "con-name",
+                }
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": "5",
+                }
+            ),
+            "reading_time": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "category": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+        }
 
     def clean_title(self):  # validation for title
         title: str = self.cleaned_data["title"]
@@ -52,3 +82,69 @@ class PostForm(forms.ModelForm):  # Form to create a post
                 raise forms.ValidationError(f"The word '{word}' is too long!")
 
         return title
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(max_length=255, required=True)
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        max_length=250,
+        required=True,
+        widget=forms.TextInput(attrs={"class": "form-control"}),
+    )
+    password = forms.CharField(
+        max_length=250,
+        required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            "first_name",
+            "last_name",
+            "email",
+        ]
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+
+class AccountEditForm(forms.ModelForm):
+    class Meta:
+        model = Account
+        fields = [
+            "photo",
+            "date_of_birth",
+            "bio",
+            "job",
+        ]
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={
+                'class': 'form-control',
+            }),
+            'bio': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': '5',
+            }),
+            'job': forms.TextInput(attrs={
+                'class': 'form-control',
+
+            }),
+            'photo': forms.FileInput(attrs={
+                'class': 'form-control',
+            }),
+        }
