@@ -50,6 +50,3 @@ At first, you may experience an error due to an empty database. To resolve this:
 Create a few posts via the [Create Post](http://127.0.0.1:8000/blog/create/) to populate your blog. This step should eliminate any initial errors related to the empty database.
 
 Enjoy developing with Django
-
-## Styles Credit
-All the style files of this project are created by artificial intelligence or taken from open source projects
