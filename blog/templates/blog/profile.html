@@ -3,7 +3,9 @@
 {% load static %}
 {% load blog_tags %}
 {% block head %} {% endblock %}
+
 {% block content %}
+
 <!-- Preloader START -->
 <div class="preloader">
     <div class="loader">
@@ -61,11 +63,8 @@
                         <div class="card card-body border h-120">
                             <!-- Icon -->
                             <div class="fs-5 text-start text-success">
-                                <form action="{% url 'blog:logout' %}" method="post">
-                                    {% csrf_token %}
-                                    <button class="dropdown-item" onclick="location.href='{% url 'blog:logout' %}'"><i
-                                            class="bi bi-power fa-fw me-2"></i>خروج</button>
-                                </form>
+                                <a class="dropdown-item" href="{% url 'blog:logout' %}"><i
+                                        class="bi bi-power fa-fw me-2"></i>خروج</a>
                             </div>
                             <!-- Content -->
                         </div>
@@ -112,12 +111,11 @@
                             <tr>
                                 <!-- Table data -->
                                 <td>
-                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter }}</a>
-                                    </h6>
+                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter }}</a></h6>
                                 </td>
                                 <!-- Table data -->
                                 <td>
-                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-info mb-2">{{ post.title }}</a>
+                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-success mb-2">{{ post.title }}</a>
                                 </td>
                                 <!-- Table data %Y/%m/%d-%H:%M -->
                                 <td>{{ post.publish_date|date }}</td>

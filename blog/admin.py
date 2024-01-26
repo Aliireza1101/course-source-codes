@@ -23,8 +23,8 @@ class CommentInline(admin.StackedInline):
 # Register your models here.
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "publish_date", "status"]
-    list_editable = ["status"]
+    list_display = ["title", "author", "publish_date", "category", "status"]
+    list_editable = ["category" ,"status"]
     list_display_links = ["title", "author", "publish_date"]
     list_filter = ["status", "publish_date", "author"]
 
