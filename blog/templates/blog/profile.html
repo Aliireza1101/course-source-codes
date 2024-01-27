@@ -63,8 +63,10 @@
                         <div class="card card-body border h-120">
                             <!-- Icon -->
                             <div class="fs-5 text-start text-success">
-                                <a class="dropdown-item" href="{% url 'blog:logout' %}"><i
-                                        class="bi bi-power fa-fw me-2"></i>خروج</a>
+                                <form action="{% url 'blog:logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item  bi-power fa-fw me-2">خروج</button>
+                                </form>
                             </div>
                             <!-- Content -->
                         </div>
@@ -111,18 +113,21 @@
                             <tr>
                                 <!-- Table data -->
                                 <td>
-                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter }}</a></h6>
+                                    <h6 class="course-title mt-2 mt-md-0 mb-0"><a href="#">{{ forloop.counter }}</a>
+                                    </h6>
                                 </td>
                                 <!-- Table data -->
                                 <td>
-                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-success mb-2">{{ post.title }}</a>
+                                    <a href="{{ post.get_absolute_url }}" class="badge text-bg-success mb-2">{{
+                                        post.title }}</a>
                                 </td>
                                 <!-- Table data %Y/%m/%d-%H:%M -->
                                 <td>{{ post.publish_date|date }}</td>
 
                                 <!-- Table data -->
                                 <td>
-                                    <span class="badge bg-warning bg-opacity-15 text-warning mb-2">{{ post.status }}</span>
+                                    <span class="badge bg-warning bg-opacity-15 text-warning mb-2">{{ post.status
+                                        }}</span>
                                 </td>
                                 <!-- Table data -->
                                 <td>
